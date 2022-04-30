@@ -1,0 +1,16 @@
+{
+  "object": {
+    "pins": [
+      {
+        "package": "Inject",
+        "repositoryURL": "https://github.com/krzysztofzablocki/Inject.git",
+        "state": {
+          "branch": null,
+          "revision": "0844cfbd6af3d30314adb49c8edf22168d254467",
+          "version": null
+        }
+      }
+    ]
+  },
+  "version": 1
+}
