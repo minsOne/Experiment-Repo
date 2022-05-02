@@ -1,16 +1,29 @@
 {
-  "object": {
-    "pins": [
-      {
-        "package": "Inject",
-        "repositoryURL": "https://github.com/krzysztofzablocki/Inject.git",
-        "state": {
-          "branch": null,
-          "revision": "0844cfbd6af3d30314adb49c8edf22168d254467",
-          "version": null
-        }
+  "pins" : [
+    {
+      "identity" : "flexlayout",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/layoutBox/FlexLayout.git",
+      "state" : {
+        "revision" : "2db7eaafbc9c988ca9ea4a236a41f67c07f7d1b6"
       }
-    ]
-  },
-  "version": 1
+    },
+    {
+      "identity" : "inject",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/krzysztofzablocki/Inject.git",
+      "state" : {
+        "revision" : "0844cfbd6af3d30314adb49c8edf22168d254467"
+      }
+    },
+    {
+      "identity" : "pinlayout",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/layoutBox/PinLayout.git",
+      "state" : {
+        "revision" : "f054f61b6c641a2298b2bedb05269f78cffb1b1c"
+      }
+    }
+  ],
+  "version" : 2
 }

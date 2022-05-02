@@ -1,25 +1,26 @@
 import UIKit
+import PinLayout
+import FlexLayout
 
-public class ViewController: UIViewController {
+
+public final class ViewController: UIViewController {
+    private let mainView = MainView()
+
+    public override func loadView() {
+        view = mainView
+    }
+
     public override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .systemRed
 
-        let label = UILabel()
-        label.text = "Hello World"
-        label.font = .boldSystemFont(ofSize: 50)
-        label.translatesAutoresizingMaskIntoConstraints = false
-        self.view.addSubview(label)
-        
-        NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor),
-        ])
-        hello()
-    }
-    
-    final func hello() {
-        print("Hello")
+        mainView.update(title: "입출금통장 개설완료",
+                         message: "입출금 통장이 개설되었습니다.\n아래의 내용을 확인해주세요.",
+                         계좌종류: "-",
+                         일일_이체한도: "1일 최대 200만원",
+                         일회_이체한도: "1회 최대 200만원")
+
+
+        mainView.rootFlexContainer.flex.layout()
+        mainView.footerFlexButtonContainer.flex.layout()
     }
 }
- 

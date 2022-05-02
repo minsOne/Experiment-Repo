@@ -11,7 +11,8 @@ let targets: [Target] = [
           resources: ["App/Resources/**"],
           dependencies: [
             .project(target: "Features", path: "../Feature/Features")
-          ]
+          ],
+          settings: .settings(base: ["GCC_PREPROCESSOR_DEFINITIONS": "$(inherited) FLEXLAYOUT_SWIFT_PACKAGE=1"])
          )
 ]
 
