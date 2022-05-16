@@ -11,7 +11,7 @@ let targets: [Target] = [
           dependencies: [
             .project(target: "UIThirdPartyLibraryManager", path: "../../UIThirdPartyLibraryManager")
           ],
-          settings: .settings(base: ["GCC_PREPROCESSOR_DEFINITIONS": "$(inherited) FLEXLAYOUT_SWIFT_PACKAGE=1"])
+          settings: .settings(base: ["GCC_PREPROCESSOR_DEFINITIONS": "$(inherited) FLEXLAYOUT_SWIFT_PACKAGE=1", "OTHER_LDFLAGS": "$(inherited) -all_load"])
          ),
     .init(name: "FeatureDepositUIPreviewApp",
           platform: .iOS,
@@ -24,7 +24,7 @@ let targets: [Target] = [
             .target(name: "FeatureDepositUI"),
             .package(product: "Inject"),
           ],
-          settings: .settings(base: ["OTHER_LDFLAGS": "$(inherited) -Xlinker -interposable", "GCC_PREPROCESSOR_DEFINITIONS": "$(inherited) FLEXLAYOUT_SWIFT_PACKAGE=1"])
+          settings: .settings(base: ["OTHER_LDFLAGS": "$(inherited) -Xlinker -interposable -all_load", "GCC_PREPROCESSOR_DEFINITIONS": "$(inherited) FLEXLAYOUT_SWIFT_PACKAGE=1"])
          ),
     .init(name: "FeatureDeposit",
           platform: .iOS,
@@ -35,7 +35,7 @@ let targets: [Target] = [
           dependencies: [
             .target(name: "FeatureDepositUI")
           ],
-          settings: .settings(base: ["GCC_PREPROCESSOR_DEFINITIONS": "$(inherited) FLEXLAYOUT_SWIFT_PACKAGE=1"])
+          settings: .settings(base: ["GCC_PREPROCESSOR_DEFINITIONS": "$(inherited) FLEXLAYOUT_SWIFT_PACKAGE=1", "OTHER_LDFLAGS": "$(inherited) -all_load"])
          ),
     .init(name: "FeatureDepositDemoApp",
           platform: .iOS,
@@ -48,7 +48,7 @@ let targets: [Target] = [
             .target(name: "FeatureDeposit"),
             .package(product: "Inject"),
           ],
-          settings: .settings(base: ["GCC_PREPROCESSOR_DEFINITIONS": "$(inherited) FLEXLAYOUT_SWIFT_PACKAGE=1"])
+          settings: .settings(base: ["GCC_PREPROCESSOR_DEFINITIONS": "$(inherited) FLEXLAYOUT_SWIFT_PACKAGE=1", "OTHER_LDFLAGS": "$(inherited) -all_load"])
          )
 ]
 

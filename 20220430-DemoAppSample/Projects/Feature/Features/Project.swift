@@ -11,7 +11,7 @@ let targets: [Target] = [
           dependencies: [
             .project(target: "FeatureDeposit", path: "../FeatureDeposit")
           ],
-          settings: .settings(base: ["GCC_PREPROCESSOR_DEFINITIONS": "$(inherited) FLEXLAYOUT_SWIFT_PACKAGE=1"])
+          settings: .settings(base: ["GCC_PREPROCESSOR_DEFINITIONS": "$(inherited) FLEXLAYOUT_SWIFT_PACKAGE=1", "OTHER_LDFLAGS": "$(inherited) -all_load"])
          ),
     .init(name: "FeaturesDemoApp",
           platform: .iOS,

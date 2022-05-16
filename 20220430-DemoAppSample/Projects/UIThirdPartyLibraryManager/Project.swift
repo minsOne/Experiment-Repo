@@ -12,7 +12,7 @@ let targets: [Target] = [
             .package(product: "FlexLayout"),
             .package(product: "PinLayout"),
           ],
-          settings: .settings(base: ["GCC_PREPROCESSOR_DEFINITIONS": "$(inherited) FLEXLAYOUT_SWIFT_PACKAGE=1"])
+          settings: .settings(base: ["GCC_PREPROCESSOR_DEFINITIONS": "$(inherited) FLEXLAYOUT_SWIFT_PACKAGE=1", "OTHER_LDFLAGS": "$(inherited) -all_load"])
          ),
     .init(name: "UIThirdPartyLibraryManagerDemoApp",
           platform: .iOS,
