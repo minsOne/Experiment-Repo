@@ -9,14 +9,6 @@
       }
     },
     {
-      "identity" : "inject",
-      "kind" : "remoteSourceControl",
-      "location" : "https://github.com/krzysztofzablocki/Inject.git",
-      "state" : {
-        "revision" : "0844cfbd6af3d30314adb49c8edf22168d254467"
-      }
-    },
-    {
       "identity" : "pinlayout",
       "kind" : "remoteSourceControl",
       "location" : "https://github.com/layoutBox/PinLayout.git",

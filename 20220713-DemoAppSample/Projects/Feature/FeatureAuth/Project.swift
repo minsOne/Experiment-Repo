@@ -9,7 +9,7 @@ let targets: [Target] = [
           deploymentTarget: .iOS(targetVersion: "13.0", devices: [.iphone, .ipad]),
           sources: ["Source/UI/**"],
           dependencies: [
-            .project(target: "FeatureContainer", path: "../FeatureContainer"),
+//            .project(target: "FeatureContainer", path: "../FeatureContainer"),
             .project(target: "UIThirdPartyLibraryManager", path: "../../UIThirdPartyLibraryManager")
           ],
           settings: .settings(base: ["GCC_PREPROCESSOR_DEFINITIONS": "$(inherited) FLEXLAYOUT_SWIFT_PACKAGE=1"])
