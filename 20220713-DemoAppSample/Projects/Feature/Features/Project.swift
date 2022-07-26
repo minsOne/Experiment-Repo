@@ -5,6 +5,8 @@ let project: Project = .dynamicFramework(
     name: "Features",
     dependencies: .init(
         module: [
-            .UIThirdPartyLibraryManager
+            .FeatureAuth,
+            .FeatureDeposit,
+            .UIThirdPartyLibraryManager,
         ])
 )

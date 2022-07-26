@@ -2,10 +2,9 @@ import ProjectDescription
 import ProjectDescriptionHelpers
 
 let project: Project = .staticFramework(
-    name: "FeatureDeposit",
+    name: "FeatureAuthInterface",
     dependencies: .init(
         module: [
-            .DIContainer,
-            .FeatureAuthInterface,
+            .DIContainer
         ])
 )

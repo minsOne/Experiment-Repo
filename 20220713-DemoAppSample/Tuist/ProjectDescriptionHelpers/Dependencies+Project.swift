@@ -13,7 +13,12 @@ extension Path {
     }
 }
 
+public typealias Dep = TargetDependency
+
 public extension TargetDependency {
-    static let UIThirdPartyLibraryManager = Self.project(target: "UIThirdPartyLibraryManager",
-                                                         path: .projects("UIThirdPartyLibraryManager"))
+    static let UIThirdPartyLibraryManager = Dep.project(target: "UIThirdPartyLibraryManager", path: .projects("UIThirdPartyLibraryManager"))
+    static let DIContainer = Dep.project(target: "DIContainer", path: .projects("Feature/DIContainer"))
+    static let FeatureAuth = Dep.project(target: "FeatureAuth", path: .projects("Feature/FeatureAuth"))
+    static let FeatureAuthInterface = Dep.project(target: "FeatureAuthInterface", path: .projects("Feature/FeatureAuthInterface"))
+    static let FeatureDeposit = Dep.project(target: "FeatureDeposit", path: .projects("Feature/FeatureDeposit"))
 }

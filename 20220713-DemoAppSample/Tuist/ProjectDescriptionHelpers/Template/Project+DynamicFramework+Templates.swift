@@ -64,12 +64,15 @@ public extension Project {
             projectSchemes.append(scheme)
         }
         
-        return Project(name: name,
-                       organizationName: organizationName,
-                       packages: packages,
-                       settings: .settings(configurations: XCConfig.project),
-                       targets: projectTargets,
-                       schemes: projectSchemes)
+        return Project(
+            name: name,
+            organizationName: organizationName,
+            packages: packages,
+            settings: .settings(configurations: XCConfig.project),
+            targets: projectTargets,
+            schemes: projectSchemes,
+            additionalFiles: ["Project.swift"]
+        )
     }
 }
 

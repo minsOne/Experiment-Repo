@@ -11,7 +11,8 @@ extension Workspace {
             projects: [
                 "Projects/**",
             ],
-            schemes: []
+            schemes: [],
+            additionalFiles: [.glob(pattern: .relativeToRoot("Tuist/**"))]
         )
     }
     

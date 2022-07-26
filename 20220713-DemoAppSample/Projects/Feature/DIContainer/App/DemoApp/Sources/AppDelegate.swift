@@ -1,6 +1,4 @@
 import UIKit
-import FeatureAuthUI
-import Inject
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

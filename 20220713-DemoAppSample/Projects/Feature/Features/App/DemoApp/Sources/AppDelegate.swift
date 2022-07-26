@@ -1,4 +1,7 @@
 import UIKit
+import FeatureAuth
+import FeatureDeposit
+import DIContainer
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
