@@ -1,6 +1,4 @@
 import UIKit
-import FeatureDepositUI
-import Inject
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -11,6 +9,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
+        
+        
+        
         let window = UIWindow(frame: UIScreen.main.bounds)
         let vc = RootViewController()
         window.rootViewController = UINavigationController(rootViewController: vc)

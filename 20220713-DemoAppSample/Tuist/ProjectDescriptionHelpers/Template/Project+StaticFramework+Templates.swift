@@ -85,7 +85,7 @@ private extension Project.StaticFramework {
                                           settings: SettingsDictionary) -> (Target, Scheme) {
         let target = Target(name: name,
                             platform: .iOS,
-                            product: .staticFramework,
+                            product: .staticLibrary,
                             productName: name,
                             bundleId: "kr.minsone.\(name)",
                             deploymentTarget: deploymentTarget,
