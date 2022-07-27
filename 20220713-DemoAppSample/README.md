@@ -11,3 +11,6 @@ cat $symbolfilePath | grep "protocol conformance descriptor for " | grep "DICont
 
 cat $symbolfilePath | grep "protocol conformance descriptor for FeatureAuth.AuthService :" | grep -v "DIContainer" | sed -E "s/protocol conformance descriptor for (.*) : (.*) in .*/\1 : \2/g"
 ```
+
+추후 개선시 참고자료
+* https://github.com/devxoul/Pure
