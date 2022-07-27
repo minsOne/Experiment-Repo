@@ -72,7 +72,7 @@ public class Container {
     }
 
     /// DSL for declaring modules within the container dependency initializer.
-    @resultBuilder struct ContainerBuilder {
+    @resultBuilder public struct ContainerBuilder {
         public static func buildBlock(_ modules: Component...) -> [Component] { modules }
         public static func buildBlock(_ module: Component) -> Component { module }
     }

@@ -13,8 +13,6 @@ public protocol AuthServiceInterface {
     func auth() -> AuthResult
 }
 
-
-
 public struct AuthServiceKey: InjectionKey {
     public typealias Value = AuthServiceInterface
     
@@ -22,5 +20,3 @@ public struct AuthServiceKey: InjectionKey {
         return Container.root.resolve(for: Self.self)
     }
 }
-
-

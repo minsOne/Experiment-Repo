@@ -14,17 +14,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
-        
-        let dependencies = Dependencies()
-        dependencies.add(module: .init(AuthServiceInterface.self) { AuthService() })
+
+        let dependencies = Dependencies {
+            Module(AuthServiceInterface.self) { AuthService() }
+            Module(AuthServiceFactory.self) { AuthServiceFactory(factory: AuthServiceFactoryImpl()) }
+        }
         dependencies.build()
         
-        let container = Container()
-        container.add(module: .init(AuthServiceKey.self) { AuthService() })
+        let container = Container {
+            Component(AuthServiceKey.self) { AuthService() }
+        }
         container.build()
         
         let service1 = DepositBuilder().build1()
         service1.run()
+        
+        let service2 = DepositBuilder().build2()
+        service2.run()
         
         let service3 = DepositBuilder().build3()
         service3.run()

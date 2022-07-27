@@ -74,14 +74,37 @@ extension Dependencies {
     }
 
     /// DSL for declaring modules within the container dependency initializer.
-    @resultBuilder struct ModuleBuilder {
+    @resultBuilder public struct ModuleBuilder {
         public static func buildBlock(_ modules: Module...) -> [Module] { modules }
         public static func buildBlock(_ module: Module) -> Module { module }
+        public static func buildEither(first component: Module) -> Module { component }
     }
 }
 
 @propertyWrapper
 public class Inject1<Value> {
+    private let name: String?
+    private var storage: Value?
+
+    public var wrappedValue: Value {
+        storage ?? {
+            let value: Value = Dependencies.root.resolve(for: name)
+            storage = value // Reuse instance for later
+            return value
+        }()
+    }
+
+    public init() {
+        self.name = nil
+    }
+
+    public init(_ name: String) {
+        self.name = name
+    }
+}
+
+@propertyWrapper
+public class Inject2<Value: Injectable> {
     private let name: String?
     private var storage: Value?
 
