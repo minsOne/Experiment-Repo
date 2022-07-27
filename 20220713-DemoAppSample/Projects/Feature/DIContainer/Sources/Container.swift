@@ -13,6 +13,12 @@ public protocol InjectionKey {
     static var currentValue: Self.Value { get }
 }
 
+public extension InjectionKey {
+    static var currentValue: Value {
+        return Container.root.resolve(for: Self.self)
+    }
+}
+
 public protocol InjectionType {}
 
 /// A type that contributes to the object graph.
@@ -20,7 +26,7 @@ public struct Component {
     fileprivate let name: String
     fileprivate let resolve: () -> InjectionType
 
-    public init(_ name: Any.Type, _ resolve: @escaping () -> InjectionType) {
+    public init<T: InjectionKey>(_ name: T.Type, _ resolve: @escaping () -> InjectionType) {
         self.name = String(describing: name)
         self.resolve = resolve
     }

@@ -15,8 +15,4 @@ public protocol AuthServiceInterface {
 
 public struct AuthServiceKey: InjectionKey {
     public typealias Value = AuthServiceInterface
-    
-    public static var currentValue: Value {
-        return Container.root.resolve(for: Self.self)
-    }
 }
