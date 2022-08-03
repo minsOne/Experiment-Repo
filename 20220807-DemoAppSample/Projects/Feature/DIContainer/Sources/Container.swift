@@ -8,17 +8,6 @@
 
 import Foundation
 
-public protocol InjectionKey {
-    associatedtype Value
-    static var currentValue: Self.Value { get }
-}
-
-public extension InjectionKey {
-    static var currentValue: Value {
-        return Container.resolve(for: Self.self)
-    }
-}
-
 /// A type that contributes to the object graph.
 public struct Component {
     fileprivate let name: String
@@ -79,25 +68,5 @@ public class Container {
     @resultBuilder public struct ContainerBuilder {
         public static func buildBlock(_ modules: Component...) -> [Component] { modules }
         public static func buildBlock(_ module: Component) -> Component { module }
-    }
-}
-
-@propertyWrapper
-public class Inject3<Value> {
-    private let lazyValue: (() -> Value)
-    private var storage: Value?
-
-    public var wrappedValue: Value {
-        storage ?? {
-            let value: Value = lazyValue()
-            storage = value // Reuse instance for later
-            return value
-        }()
-    }
-
-    public init<K>(_ key: K.Type) where K : InjectionKey, Value == K.Value {
-        lazyValue = {
-            key.currentValue
-        }
     }
 }

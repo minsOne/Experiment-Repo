@@ -11,32 +11,16 @@ import FeatureAuthInterface
 import DIContainer
 
 public protocol DepositBuildable {
-    func build1() -> DepositServiceProtocol
-    func build2() -> DepositServiceProtocol
-    func build3() -> DepositServiceProtocol
+    func build() -> DepositServiceProtocol
 }
 
 public struct DepositBuilder: DepositBuildable {
-    @Inject1
-    var authService1: AuthServiceInterface
-    
-    @Inject2
-    var authServiceFactory: AuthServiceFactory
-
-    @Inject3(AuthServiceKey.self)
+    @Inject(AuthServiceKey.self)
     var authService3: AuthServiceInterface
     
     public init() {}
-    
-    public func build1() -> DepositServiceProtocol {
-        DepositService(authService: authService1)
-    }
-    
-    public func build2() -> DepositServiceProtocol {
-        DepositService(authService: authServiceFactory.build())
-    }
-    
-    public func build3() -> DepositServiceProtocol {
+
+    public func build() -> DepositServiceProtocol {
         DepositService(authService: authService3)
     }
 }
