@@ -15,18 +15,16 @@ public protocol InjectionKey {
 
 public extension InjectionKey {
     static var currentValue: Value {
-        return Container.root.resolve(for: Self.self)
+        return Container.resolve(for: Self.self)
     }
 }
-
-public protocol InjectionType {}
 
 /// A type that contributes to the object graph.
 public struct Component {
     fileprivate let name: String
-    fileprivate let resolve: () -> InjectionType
+    fileprivate let resolve: () -> Injectable
 
-    public init<T: InjectionKey>(_ name: T.Type, _ resolve: @escaping () -> InjectionType) {
+    public init<T: InjectionKey>(_ name: T.Type, _ resolve: @escaping () -> Injectable) {
         self.name = String(describing: name)
         self.resolve = resolve
     }
@@ -40,17 +38,17 @@ public class Container {
     deinit { modules.removeAll() }
     
     /// Registers a specific type and its instantiating factory.
-    public func add(module: Component) {
+    func add(module: Component) {
         modules[module.name] = module
     }
     
     /// Resolves through inference and returns an instance of the given type from the current default container.
     ///
     /// If the dependency is not found, an exception will occur.
-    public func resolve<T>(for type: Any.Type?) -> T {
+    public static func resolve<T>(for type: Any.Type?) -> T {
         let name = type.map { String(describing: $0) } ?? String(describing: T.self)
 
-        guard let component: T = modules[name]?.resolve() as? T else {
+        guard let component: T = root.modules[name]?.resolve() as? T else {
             fatalError("Dependency '\(T.self)' not resolved!")
         }
 

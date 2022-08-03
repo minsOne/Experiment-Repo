@@ -1,7 +1,7 @@
 import FeatureAuthInterface
 import DIContainer
 
-public struct AuthService: AuthServiceInterface, Injectable, InjectionType {
+public struct AuthService: AuthServiceInterface, Injectable {
     public init() {}
 
     public func auth() -> AuthResult {

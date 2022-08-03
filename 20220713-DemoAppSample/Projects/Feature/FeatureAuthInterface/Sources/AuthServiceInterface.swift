@@ -12,7 +12,3 @@ public struct AuthResult {
 public protocol AuthServiceInterface {
     func auth() -> AuthResult
 }
-
-public struct AuthServiceKey: InjectionKey {
-    public typealias Value = AuthServiceInterface
-}
