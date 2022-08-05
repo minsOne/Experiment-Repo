@@ -69,7 +69,9 @@ public extension Project {
                        packages: packages,
                        settings: .settings(configurations: XCConfig.project),
                        targets: projectTargets,
-                       schemes: projectSchemes)
+                       schemes: projectSchemes,
+                       additionalFiles: ["Project.swift"]
+        )
     }
 }
 
