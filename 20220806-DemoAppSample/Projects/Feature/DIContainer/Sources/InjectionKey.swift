@@ -12,6 +12,7 @@ public protocol Injectable {}
 
 public protocol InjectionKey {
     associatedtype Value
+    var type: Value? { get }
     static var currentValue: Self.Value { get }
 }
 

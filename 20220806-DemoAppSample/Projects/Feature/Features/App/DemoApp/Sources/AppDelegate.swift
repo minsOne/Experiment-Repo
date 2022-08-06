@@ -1,9 +1,9 @@
-import UIKit
+import DIContainer
 import Features
 import FeatureAuth
 import FeatureAuthInterface
 import FeatureDeposit
-import DIContainer
+import UIKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -14,11 +14,22 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         _ application: UIApplication,
         didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey : Any]? = nil
     ) -> Bool {
-        let vc = RootViewController()
-        let window = UIWindow(frame: UIScreen.main.bounds)
-        window.rootViewController = UINavigationController(rootViewController: vc)
-        self.window = window
         
+        let container = Container {
+            Component(FeatureAuthInterface.AuthServiceKey.self) { FeatureAuth.AuthService() }
+        }
+        container.build()
+        
+        let service = DepositBuilder().build()
+        service.run()
+        
+        let window = UIWindow(frame: UIScreen.main.bounds)
+        let vc = RootViewController()
+        window.rootViewController = UINavigationController(rootViewController: vc)
+        window.makeKeyAndVisible()
+        self.window = window
+
         return true
     }
 }
+

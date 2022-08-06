@@ -10,8 +10,8 @@ import Foundation
 
 /// A type that contributes to the object graph.
 public struct Component {
-    fileprivate let name: String
-    fileprivate let resolve: () -> Injectable
+    let name: String
+    let resolve: () -> Injectable
 
     public init<T: InjectionKey>(_ name: T.Type, _ resolve: @escaping () -> Injectable) {
         self.name = String(describing: name)
@@ -21,7 +21,7 @@ public struct Component {
 
 public class Container {
     /// Stored object instance factories.
-    private var modules: [String: Component] = [:]
+    var modules: [String: Component] = [:]
     
     public init() {}
     deinit { modules.removeAll() }

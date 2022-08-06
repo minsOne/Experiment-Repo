@@ -1,7 +1,7 @@
 import Foundation
 import UIKit
 
-final class RootViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+public class RootViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     enum Row: Int, CaseIterable {
         case row1, row2
         var title: String {
@@ -14,12 +14,12 @@ final class RootViewController: UIViewController, UITableViewDelegate, UITableVi
 
     let tableView = UITableView()
 
-    override func viewDidLoad() {
+    public override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
     }
 
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    public func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
 
         switch Row(rawValue: indexPath.row) {
@@ -42,9 +42,9 @@ extension RootViewController {
         tableView.dataSource = self
     }
 
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { Row.allCases.count }
+    public func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int { Row.allCases.count }
 
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    public func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell(style: .default, reuseIdentifier: "Cell")
         cell.textLabel?.text = Row(rawValue: indexPath.row)?.title
         return cell

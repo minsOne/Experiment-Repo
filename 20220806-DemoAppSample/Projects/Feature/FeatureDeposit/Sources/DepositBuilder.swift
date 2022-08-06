@@ -16,11 +16,11 @@ public protocol DepositBuildable {
 
 public struct DepositBuilder: DepositBuildable {
     @Inject(AuthServiceKey.self)
-    var authService3: AuthServiceInterface
+    var authService: AuthServiceInterface
     
     public init() {}
 
     public func build() -> DepositServiceProtocol {
-        DepositService(authService: authService3)
+        DepositService(authService: authService)
     }
 }
