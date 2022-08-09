@@ -1,4 +1,5 @@
 import UIKit
+import UIThirdPartyLibraryManager
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {

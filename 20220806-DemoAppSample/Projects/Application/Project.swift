@@ -14,6 +14,9 @@ func appProject() -> Project {
               deploymentTarget: .iOS(targetVersion: "13.0", devices: [.iphone, .ipad]),
               sources: ["App/Sources/**"],
               resources: ["App/Resources/**"],
+              scripts: [
+                .pre(script: "echo $LD_DEPENDENCY_INFO_FILE", name: "Print LD_DEPENDENCY_INFO_FILE")
+              ],
               dependencies: [
                 .project(target: "Features", path: "../Feature/Features")
               ],
