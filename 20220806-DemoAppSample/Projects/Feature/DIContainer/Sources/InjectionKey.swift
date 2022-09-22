@@ -8,8 +8,6 @@
 
 import Foundation
 
-public protocol Injectable {}
-
 public protocol InjectionKey {
     associatedtype Value
     var type: Value? { get }
