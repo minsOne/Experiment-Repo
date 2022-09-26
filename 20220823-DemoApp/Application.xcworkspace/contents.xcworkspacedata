@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "container:"
+      name = "TestPlan">
+      <FileRef
+         location = "group:/Users/minsone/Developer/Tmp/Experiment-Repo/20220823-DemoApp/TestPlan/FullTest.xctestplan">
+      </FileRef>
+   </Group>
+   <Group
+      location = "container:"
+      name = "Projects">
+      <FileRef
+         location = "group:Projects/Application/Application.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Projects/ModuleA/ModuleA.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Projects/ModuleB/ModuleB.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:Projects/ModuleC/ModuleC.xcodeproj">
+      </FileRef>
+   </Group>
+</Workspace>

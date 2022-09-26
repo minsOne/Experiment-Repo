@@ -1,0 +1,56 @@
+{
+  "configurations" : [
+    {
+      "id" : "36E28BCA-F3CC-4EBF-A90F-EE0B8DF0AA8A",
+      "name" : "Configuration 1",
+      "options" : {}
+    }
+  ],
+  "defaultOptions" : {
+    "testTimeoutsEnabled" : true
+  },
+  "testTargets" : [
+
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Application.xcodeproj",
+        "identifier" : "CBAB91A528B51F9400804137",
+        "name" : "ApplicationTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Application.xcodeproj",
+        "identifier" : "CBAB91AF28B51F9400804137",
+        "name" : "ApplicationUITests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:..\/ModuleA\/ModuleA.xcodeproj",
+        "identifier" : "CBAB91FD28B520AC00804137",
+        "name" : "ModuleATests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:..\/ModuleB\/ModuleB.xcodeproj",
+        "identifier" : "CBAB91E928B520A400804137",
+        "name" : "ModuleBTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:..\/ModuleC\/ModuleC.xcodeproj",
+        "identifier" : "CBAB921928B520F400804137",
+        "name" : "ModuleCTests"
+      }
+    },
+  ],
+  "version" : 1
+}
