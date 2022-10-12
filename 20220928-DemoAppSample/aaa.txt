@@ -1,0 +1,11 @@
+import DIContainer
+import FeatureAuthInterface
+
+struct ContainerRegisterService {
+    func register() {
+        Container {
+            Component(FeatureAuthInterface.AuthServiceKey.self){ FeatureAuth.AuthService() }
+            Component(FeatureAuthInterface.PinServiceKey.self){ <#구현타입없음확인필요#> }
+        }.build()
+    }
+}
