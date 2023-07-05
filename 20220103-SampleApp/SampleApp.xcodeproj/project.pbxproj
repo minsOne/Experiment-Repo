@@ -20,17 +20,17 @@
 		CB0BF5A52764A45900FB560A /* ThirdPartyLibraryManager.h in Headers */ = {isa = PBXBuildFile; fileRef = CB0BF5A42764A45900FB560A /* ThirdPartyLibraryManager.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CB0BF5A82764A45900FB560A /* ThirdPartyLibraryManager.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CB0BF5A22764A45900FB560A /* ThirdPartyLibraryManager.framework */; };
 		CB0BF5A92764A45900FB560A /* ThirdPartyLibraryManager.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CB0BF5A22764A45900FB560A /* ThirdPartyLibraryManager.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		CB40CEE32A545F7B00D6977D /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CB40CEE22A545F7B00D6977D /* RxCocoa */; };
+		CB40CEE52A545F7B00D6977D /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = CB40CEE42A545F7B00D6977D /* RxRelay */; };
+		CB40CEE72A545F7B00D6977D /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CB40CEE62A545F7B00D6977D /* RxSwift */; };
+		CB40CEE92A545F8100D6977D /* RIBs in Frameworks */ = {isa = PBXBuildFile; productRef = CB40CEE82A545F8100D6977D /* RIBs */; };
+		CB40CEEB2A545F8C00D6977D /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = CB40CEEA2A545F8C00D6977D /* RxTest */; };
 		CB6DFD2D27834562005D229B /* RxBlocking in Frameworks */ = {isa = PBXBuildFile; productRef = CB6DFD2C27834562005D229B /* RxBlocking */; };
-		CB6DFD2F27834562005D229B /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CB6DFD2E27834562005D229B /* RxCocoa */; };
-		CB6DFD3127834562005D229B /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = CB6DFD3027834562005D229B /* RxRelay */; };
-		CB6DFD3327834562005D229B /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CB6DFD3227834562005D229B /* RxSwift */; };
-		CB6DFD3527834562005D229B /* RxTest in Frameworks */ = {isa = PBXBuildFile; productRef = CB6DFD3427834562005D229B /* RxTest */; };
 		CB6DFD3727834562005D229B /* Quick in Frameworks */ = {isa = PBXBuildFile; productRef = CB6DFD3627834562005D229B /* Quick */; };
 		CB6DFD3927834562005D229B /* Nimble in Frameworks */ = {isa = PBXBuildFile; productRef = CB6DFD3827834562005D229B /* Nimble */; };
 		CB6DFD3B27834562005D229B /* RxNimble in Frameworks */ = {isa = PBXBuildFile; productRef = CB6DFD3A27834562005D229B /* RxNimble */; };
 		CB6DFD3D27834598005D229B /* Hello.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB6DFD3C27834598005D229B /* Hello.swift */; };
 		CB6DFD4827849866005D229B /* RIBs in Frameworks */ = {isa = PBXBuildFile; productRef = CB6DFD4727849866005D229B /* RIBs */; };
-		CB6DFD4A27849872005D229B /* RIBs in Frameworks */ = {isa = PBXBuildFile; productRef = CB6DFD4927849872005D229B /* RIBs */; };
 		CBDDB0CC2764A4B6000ADB37 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CBDDB0CB2764A4B6000ADB37 /* RxCocoa */; };
 		CBDDB0CE2764A4B6000ADB37 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = CBDDB0CD2764A4B6000ADB37 /* RxRelay */; };
 		CBDDB0D02764A4B6000ADB37 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CBDDB0CF2764A4B6000ADB37 /* RxSwift */; };
@@ -99,6 +99,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB40CEE92A545F8100D6977D /* RIBs in Frameworks */,
+				CB40CEE52A545F7B00D6977D /* RxRelay in Frameworks */,
+				CB40CEE32A545F7B00D6977D /* RxCocoa in Frameworks */,
+				CB40CEE72A545F7B00D6977D /* RxSwift in Frameworks */,
 				CB0BF5A82764A45900FB560A /* ThirdPartyLibraryManager.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -107,15 +111,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CB6DFD4A27849872005D229B /* RIBs in Frameworks */,
-				CB6DFD3527834562005D229B /* RxTest in Frameworks */,
 				CB6DFD3B27834562005D229B /* RxNimble in Frameworks */,
-				CB6DFD3327834562005D229B /* RxSwift in Frameworks */,
 				CB6DFD3727834562005D229B /* Quick in Frameworks */,
-				CB6DFD3127834562005D229B /* RxRelay in Frameworks */,
 				CB6DFD2D27834562005D229B /* RxBlocking in Frameworks */,
 				CB6DFD3927834562005D229B /* Nimble in Frameworks */,
-				CB6DFD2F27834562005D229B /* RxCocoa in Frameworks */,
+				CB40CEEB2A545F8C00D6977D /* RxTest in Frameworks */,
 				CB016C92276651E00006AFE4 /* ThirdPartyLibraryManager.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -242,6 +242,10 @@
 			);
 			name = SampleApp;
 			packageProductDependencies = (
+				CB40CEE22A545F7B00D6977D /* RxCocoa */,
+				CB40CEE42A545F7B00D6977D /* RxRelay */,
+				CB40CEE62A545F7B00D6977D /* RxSwift */,
+				CB40CEE82A545F8100D6977D /* RIBs */,
 			);
 			productName = SampleApp;
 			productReference = CB0BF5632764A15200FB560A /* SampleApp.app */;
@@ -263,14 +267,10 @@
 			name = SampleAppTests;
 			packageProductDependencies = (
 				CB6DFD2C27834562005D229B /* RxBlocking */,
-				CB6DFD2E27834562005D229B /* RxCocoa */,
-				CB6DFD3027834562005D229B /* RxRelay */,
-				CB6DFD3227834562005D229B /* RxSwift */,
-				CB6DFD3427834562005D229B /* RxTest */,
 				CB6DFD3627834562005D229B /* Quick */,
 				CB6DFD3827834562005D229B /* Nimble */,
 				CB6DFD3A27834562005D229B /* RxNimble */,
-				CB6DFD4927849872005D229B /* RIBs */,
+				CB40CEEA2A545F8C00D6977D /* RxTest */,
 			);
 			productName = SampleAppTests;
 			productReference = CB0BF5792764A15200FB560A /* SampleAppTests.xctest */;
@@ -607,6 +607,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6794ZU679A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SampleApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -635,6 +636,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 6794ZU679A;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = SampleApp/Info.plist;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -902,30 +904,35 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		CB6DFD2C27834562005D229B /* RxBlocking */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CBDDB0CA2764A4B5000ADB37 /* XCRemoteSwiftPackageReference "RxSwift" */;
-			productName = RxBlocking;
-		};
-		CB6DFD2E27834562005D229B /* RxCocoa */ = {
+		CB40CEE22A545F7B00D6977D /* RxCocoa */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CBDDB0CA2764A4B5000ADB37 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxCocoa;
 		};
-		CB6DFD3027834562005D229B /* RxRelay */ = {
+		CB40CEE42A545F7B00D6977D /* RxRelay */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CBDDB0CA2764A4B5000ADB37 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxRelay;
 		};
-		CB6DFD3227834562005D229B /* RxSwift */ = {
+		CB40CEE62A545F7B00D6977D /* RxSwift */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CBDDB0CA2764A4B5000ADB37 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxSwift;
 		};
-		CB6DFD3427834562005D229B /* RxTest */ = {
+		CB40CEE82A545F8100D6977D /* RIBs */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB6DFD4627849866005D229B /* XCRemoteSwiftPackageReference "ribs" */;
+			productName = RIBs;
+		};
+		CB40CEEA2A545F8C00D6977D /* RxTest */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CBDDB0CA2764A4B5000ADB37 /* XCRemoteSwiftPackageReference "RxSwift" */;
 			productName = RxTest;
+		};
+		CB6DFD2C27834562005D229B /* RxBlocking */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CBDDB0CA2764A4B5000ADB37 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxBlocking;
 		};
 		CB6DFD3627834562005D229B /* Quick */ = {
 			isa = XCSwiftPackageProductDependency;
@@ -943,11 +950,6 @@
 			productName = RxNimble;
 		};
 		CB6DFD4727849866005D229B /* RIBs */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CB6DFD4627849866005D229B /* XCRemoteSwiftPackageReference "ribs" */;
-			productName = RIBs;
-		};
-		CB6DFD4927849872005D229B /* RIBs */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = CB6DFD4627849866005D229B /* XCRemoteSwiftPackageReference "ribs" */;
 			productName = RIBs;

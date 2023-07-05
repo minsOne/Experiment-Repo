@@ -17,3 +17,6 @@ public extension R.Storyboard {
         UIStoryboard(name: "BViewController", bundle: Bundle(for: R.self))
     }
 }
+
+@_spi(Hello)
+public struct AAAA {}

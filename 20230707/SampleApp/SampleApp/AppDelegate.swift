@@ -1,12 +1,11 @@
 //
 //  AppDelegate.swift
-//  Application
+//  SampleApp
 //
-//  Created by minsOne on 2023/04/17.
+//  Created by minsOne on 2023/07/06.
 //
 
 import UIKit
-import AppResources
 
 @main
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -15,9 +14,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-        
-
-        
         return true
     }
 

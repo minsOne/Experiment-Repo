@@ -12,3 +12,7 @@ import DIContainer
 public struct AuthServiceKey: InjectionKey {
     public typealias Value = AuthServiceInterface
 }
+
+public protocol SampleInterface {
+    func sample()
+}

@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Workspace
+   version = "1.0">
+   <Group
+      location = "group:Projects"
+      name = "Projects">
+      <FileRef
+         location = "group:Application/Application.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:SharedThirdPartyLibraryManager/SharedThirdPartyLibraryManager.xcodeproj">
+      </FileRef>
+      <FileRef
+         location = "group:UIThirdPartyLibraryManager/UIThirdPartyLibraryManager.xcodeproj">
+      </FileRef>
+      <Group
+         location = "group:Feature"
+         name = "Feature">
+         <FileRef
+            location = "group:DIContainer/DIContainer.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:FeatureAuth/FeatureAuth.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:FeatureAuthInterface/FeatureAuthInterface.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:FeatureDeposit/FeatureDeposit.xcodeproj">
+         </FileRef>
+         <FileRef
+            location = "group:Features/Features.xcodeproj">
+         </FileRef>
+         <Group
+            location = "group:DemandDeposit"
+            name = "DemandDeposit">
+            <FileRef
+               location = "group:Domain/FeatureDemandDepositDomain.xcodeproj">
+            </FileRef>
+            <FileRef
+               location = "group:Interface/FeatureDemandDepositInterface.xcodeproj">
+            </FileRef>
+            <FileRef
+               location = "group:Package/FeatureDemandDepositPackage.xcodeproj">
+            </FileRef>
+            <FileRef
+               location = "group:UI/FeatureDemandDepositUI.xcodeproj">
+            </FileRef>
+         </Group>
+      </Group>
+   </Group>
+   <Group
+      location = "group:Tuist"
+      name = "Tuist">
+      <Group
+         location = "group:ProjectDescriptionHelpers"
+         name = "ProjectDescriptionHelpers">
+         <FileRef
+            location = "group:Dependencies+Package.swift">
+         </FileRef>
+         <FileRef
+            location = "group:Dependencies+Project.swift">
+         </FileRef>
+         <FileRef
+            location = "group:Helper.swift">
+         </FileRef>
+         <Group
+            location = "group:Template"
+            name = "Template">
+            <FileRef
+               location = "group:Project+DynamicFramework+Templates.swift">
+            </FileRef>
+            <FileRef
+               location = "group:Project+Feature+Templates.swift">
+            </FileRef>
+            <FileRef
+               location = "group:Project+StaticFramework+Templates.swift">
+            </FileRef>
+         </Group>
+      </Group>
+   </Group>
+</Workspace>

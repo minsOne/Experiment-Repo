@@ -16,3 +16,8 @@ public struct DepositService: DepositServiceProtocol {
         print("Auth Result : \(result.value)")
     }
 }
+
+
+public protocol SampleInterface {
+    func sample()
+}

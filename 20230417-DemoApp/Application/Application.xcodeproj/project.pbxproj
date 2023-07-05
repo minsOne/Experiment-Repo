@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CBB234362A1CE36C0017B3D9 /* AppResources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBCA3A4729EC523F009E50B4 /* AppResources.framework */; };
 		CBCA3A2D29EC4A05009E50B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCA3A2C29EC4A05009E50B4 /* AppDelegate.swift */; };
 		CBCA3A2F29EC4A05009E50B4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCA3A2E29EC4A05009E50B4 /* SceneDelegate.swift */; };
 		CBCA3A3129EC4A05009E50B4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCA3A3029EC4A05009E50B4 /* ViewController.swift */; };
@@ -15,14 +16,12 @@
 		CBCA3A3929EC4A07009E50B4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBCA3A3729EC4A07009E50B4 /* LaunchScreen.storyboard */; };
 		CBCA3A4129EC51E7009E50B4 /* BViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCA3A4029EC51E7009E50B4 /* BViewController.swift */; };
 		CBCA3A4A29EC523F009E50B4 /* AppResources.h in Headers */ = {isa = PBXBuildFile; fileRef = CBCA3A4929EC523F009E50B4 /* AppResources.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CBCA3A4D29EC523F009E50B4 /* AppResources.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CBCA3A4729EC523F009E50B4 /* AppResources.framework */; };
-		CBCA3A4E29EC523F009E50B4 /* AppResources.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CBCA3A4729EC523F009E50B4 /* AppResources.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CBCA3A5429EC5251009E50B4 /* BViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CBCA3A5329EC5251009E50B4 /* BViewController.storyboard */; };
 		CBCA3A5629EC52E9009E50B4 /* R.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCA3A5529EC52E9009E50B4 /* R.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		CBCA3A4B29EC523F009E50B4 /* PBXContainerItemProxy */ = {
+		CBB234382A1CE36C0017B3D9 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CBCA3A2129EC4A05009E50B4 /* Project object */;
 			proxyType = 1;
@@ -30,20 +29,6 @@
 			remoteInfo = AppResources;
 		};
 /* End PBXContainerItemProxy section */
-
-/* Begin PBXCopyFilesBuildPhase section */
-		CBCA3A5229EC523F009E50B4 /* Embed Frameworks */ = {
-			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
-			dstPath = "";
-			dstSubfolderSpec = 10;
-			files = (
-				CBCA3A4E29EC523F009E50B4 /* AppResources.framework in Embed Frameworks */,
-			);
-			name = "Embed Frameworks";
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		CBCA3A2929EC4A05009E50B4 /* Application.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Application.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -66,7 +51,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CBCA3A4D29EC523F009E50B4 /* AppResources.framework in Frameworks */,
+				CBB234362A1CE36C0017B3D9 /* AppResources.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -80,12 +65,20 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CBB234352A1CE36C0017B3D9 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		CBCA3A2029EC4A05009E50B4 = {
 			isa = PBXGroup;
 			children = (
 				CBCA3A2B29EC4A05009E50B4 /* Application */,
 				CBCA3A4829EC523F009E50B4 /* AppResources */,
 				CBCA3A2A29EC4A05009E50B4 /* Products */,
+				CBB234352A1CE36C0017B3D9 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -144,12 +137,11 @@
 				CBCA3A2529EC4A05009E50B4 /* Sources */,
 				CBCA3A2629EC4A05009E50B4 /* Frameworks */,
 				CBCA3A2729EC4A05009E50B4 /* Resources */,
-				CBCA3A5229EC523F009E50B4 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
 			dependencies = (
-				CBCA3A4C29EC523F009E50B4 /* PBXTargetDependency */,
+				CBB234392A1CE36C0017B3D9 /* PBXTargetDependency */,
 			);
 			name = Application;
 			productName = Application;
@@ -256,10 +248,10 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		CBCA3A4C29EC523F009E50B4 /* PBXTargetDependency */ = {
+		CBB234392A1CE36C0017B3D9 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = CBCA3A4629EC523F009E50B4 /* AppResources */;
-			targetProxy = CBCA3A4B29EC523F009E50B4 /* PBXContainerItemProxy */;
+			targetProxy = CBB234382A1CE36C0017B3D9 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -400,7 +392,6 @@
 		CBCA3A3E29EC4A07009E50B4 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -428,7 +419,6 @@
 		CBCA3A3F29EC4A07009E50B4 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;

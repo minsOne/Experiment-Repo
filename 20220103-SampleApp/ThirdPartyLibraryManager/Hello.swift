@@ -8,7 +8,6 @@
 import Foundation
 import RxSwift
 import RxRelay
-import RxKeyboard
 import RIBs
 
 func hello() {
