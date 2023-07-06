@@ -21,6 +21,15 @@
 		CB20A04C2A56FD8C00314136 /* BFramework.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = CB20A0452A56FD8C00314136 /* BFramework.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CB20A0512A56FD9600314136 /* AService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB20A0502A56FD9600314136 /* AService.swift */; };
 		CB20A0532A56FD9D00314136 /* BService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB20A0522A56FD9D00314136 /* BService.swift */; };
+		CB20A0572A57020500314136 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CB20A0562A57020500314136 /* RxCocoa */; };
+		CB20A0592A57020500314136 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = CB20A0582A57020500314136 /* RxRelay */; };
+		CB20A05B2A57020500314136 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CB20A05A2A57020500314136 /* RxSwift */; };
+		CB20A05D2A5703C000314136 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CB20A05C2A5703C000314136 /* RxCocoa */; };
+		CB20A05F2A5703C000314136 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = CB20A05E2A5703C000314136 /* RxRelay */; };
+		CB20A0612A5703C000314136 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CB20A0602A5703C000314136 /* RxSwift */; };
+		CB20A0692A5716FE00314136 /* RxCocoa in Frameworks */ = {isa = PBXBuildFile; productRef = CB20A0682A5716FE00314136 /* RxCocoa */; };
+		CB20A06B2A5716FE00314136 /* RxRelay in Frameworks */ = {isa = PBXBuildFile; productRef = CB20A06A2A5716FE00314136 /* RxRelay */; };
+		CB20A06D2A5716FF00314136 /* RxSwift in Frameworks */ = {isa = PBXBuildFile; productRef = CB20A06C2A5716FF00314136 /* RxSwift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -77,7 +86,10 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB20A0692A5716FE00314136 /* RxCocoa in Frameworks */,
 				CB20A04B2A56FD8C00314136 /* BFramework.framework in Frameworks */,
+				CB20A06D2A5716FF00314136 /* RxSwift in Frameworks */,
+				CB20A06B2A5716FE00314136 /* RxRelay in Frameworks */,
 				CB20A03A2A56FD8200314136 /* AFramework.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -86,6 +98,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB20A05B2A57020500314136 /* RxSwift in Frameworks */,
+				CB20A0592A57020500314136 /* RxRelay in Frameworks */,
+				CB20A0572A57020500314136 /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -93,6 +108,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB20A0612A5703C000314136 /* RxSwift in Frameworks */,
+				CB20A05F2A5703C000314136 /* RxRelay in Frameworks */,
+				CB20A05D2A5703C000314136 /* RxCocoa in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,6 +124,7 @@
 				CB20A0352A56FD8200314136 /* AFramework */,
 				CB20A0462A56FD8C00314136 /* BFramework */,
 				CB20A0192A56FD6F00314136 /* Products */,
+				CB20A0552A57020500314136 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -151,6 +170,13 @@
 			path = BFramework;
 			sourceTree = "<group>";
 		};
+		CB20A0552A57020500314136 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
@@ -189,6 +215,11 @@
 				CB20A04A2A56FD8C00314136 /* PBXTargetDependency */,
 			);
 			name = SampleApp;
+			packageProductDependencies = (
+				CB20A0682A5716FE00314136 /* RxCocoa */,
+				CB20A06A2A5716FE00314136 /* RxRelay */,
+				CB20A06C2A5716FF00314136 /* RxSwift */,
+			);
 			productName = SampleApp;
 			productReference = CB20A0182A56FD6F00314136 /* SampleApp.app */;
 			productType = "com.apple.product-type.application";
@@ -207,6 +238,11 @@
 			dependencies = (
 			);
 			name = AFramework;
+			packageProductDependencies = (
+				CB20A0562A57020500314136 /* RxCocoa */,
+				CB20A0582A57020500314136 /* RxRelay */,
+				CB20A05A2A57020500314136 /* RxSwift */,
+			);
 			productName = AFramework;
 			productReference = CB20A0342A56FD8200314136 /* AFramework.framework */;
 			productType = "com.apple.product-type.framework";
@@ -225,6 +261,11 @@
 			dependencies = (
 			);
 			name = BFramework;
+			packageProductDependencies = (
+				CB20A05C2A5703C000314136 /* RxCocoa */,
+				CB20A05E2A5703C000314136 /* RxRelay */,
+				CB20A0602A5703C000314136 /* RxSwift */,
+			);
 			productName = BFramework;
 			productReference = CB20A0452A56FD8C00314136 /* BFramework.framework */;
 			productType = "com.apple.product-type.framework";
@@ -724,6 +765,54 @@
 			};
 		};
 /* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		CB20A0562A57020500314136 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB20A0542A56FDD500314136 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		CB20A0582A57020500314136 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB20A0542A56FDD500314136 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		CB20A05A2A57020500314136 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB20A0542A56FDD500314136 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		CB20A05C2A5703C000314136 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB20A0542A56FDD500314136 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		CB20A05E2A5703C000314136 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB20A0542A56FDD500314136 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		CB20A0602A5703C000314136 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB20A0542A56FDD500314136 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+		CB20A0682A5716FE00314136 /* RxCocoa */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB20A0542A56FDD500314136 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxCocoa;
+		};
+		CB20A06A2A5716FE00314136 /* RxRelay */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB20A0542A56FDD500314136 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxRelay;
+		};
+		CB20A06C2A5716FF00314136 /* RxSwift */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = CB20A0542A56FDD500314136 /* XCRemoteSwiftPackageReference "RxSwift" */;
+			productName = RxSwift;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = CB20A0102A56FD6F00314136 /* Project object */;
 }
