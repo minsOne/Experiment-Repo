@@ -1,0 +1,14 @@
+//
+//  Array+Extension.swift
+//  SampleApp
+//
+//  Created by minsOne on 2023/07/23.
+//
+
+import Foundation
+
+public extension Array {
+    subscript (safe index: Int) -> Element? {
+        return indices ~= index ? self[index] : nil
+    }
+}
