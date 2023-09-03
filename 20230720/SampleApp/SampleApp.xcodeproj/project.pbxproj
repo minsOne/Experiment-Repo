@@ -20,6 +20,14 @@
 		CB574B3F2A63E18E0054FEE9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB574B3D2A63E18E0054FEE9 /* Main.storyboard */; };
 		CB574B412A63E18F0054FEE9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = CB574B402A63E18F0054FEE9 /* Assets.xcassets */; };
 		CB574B442A63E18F0054FEE9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = CB574B422A63E18F0054FEE9 /* LaunchScreen.storyboard */; };
+		CBA642C02A751FA000269578 /* AccountRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA642BC2A751FA000269578 /* AccountRouter.swift */; };
+		CBA642C12A751FA000269578 /* AccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA642BD2A751FA000269578 /* AccountViewController.swift */; };
+		CBA642C22A751FA000269578 /* AccountBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA642BE2A751FA000269578 /* AccountBuilder.swift */; };
+		CBA642C32A751FA000269578 /* AccountInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA642BF2A751FA000269578 /* AccountInteractor.swift */; };
+		CBA642C82A751FFA00269578 /* AccountView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA642C72A751FFA00269578 /* AccountView.swift */; };
+		CBA642CB2A7522C300269578 /* AccountViewStateAction.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA642CA2A7522C300269578 /* AccountViewStateAction.swift */; };
+		CBA642CE2A75232E00269578 /* HomeViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA642CD2A75232E00269578 /* HomeViewController+Extension.swift */; };
+		CBA642D12A75238500269578 /* AccountViewPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA642D02A75238500269578 /* AccountViewPresenter.swift */; };
 		CBF85A4F2A6ABD10000D3F8F /* View+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF85A4E2A6ABD10000D3F8F /* View+Extension.swift */; };
 		CBF85A542A6D0F41000D3F8F /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBF85A532A6D0F41000D3F8F /* Array+Extension.swift */; };
 /* End PBXBuildFile section */
@@ -39,6 +47,14 @@
 		CB574B402A63E18F0054FEE9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		CB574B432A63E18F0054FEE9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		CB574B452A63E18F0054FEE9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CBA642BC2A751FA000269578 /* AccountRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountRouter.swift; sourceTree = "<group>"; };
+		CBA642BD2A751FA000269578 /* AccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewController.swift; sourceTree = "<group>"; };
+		CBA642BE2A751FA000269578 /* AccountBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountBuilder.swift; sourceTree = "<group>"; };
+		CBA642BF2A751FA000269578 /* AccountInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountInteractor.swift; sourceTree = "<group>"; };
+		CBA642C72A751FFA00269578 /* AccountView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountView.swift; sourceTree = "<group>"; };
+		CBA642CA2A7522C300269578 /* AccountViewStateAction.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewStateAction.swift; sourceTree = "<group>"; };
+		CBA642CD2A75232E00269578 /* HomeViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "HomeViewController+Extension.swift"; sourceTree = "<group>"; };
+		CBA642D02A75238500269578 /* AccountViewPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountViewPresenter.swift; sourceTree = "<group>"; };
 		CBF85A4E2A6ABD10000D3F8F /* View+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Extension.swift"; sourceTree = "<group>"; };
 		CBF85A532A6D0F41000D3F8F /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -74,17 +90,88 @@
 		CB574B362A63E18E0054FEE9 /* SampleApp */ = {
 			isa = PBXGroup;
 			children = (
+				CB574B452A63E18F0054FEE9 /* Info.plist */,
 				CB574B372A63E18E0054FEE9 /* AppDelegate.swift */,
 				CB574B392A63E18E0054FEE9 /* SceneDelegate.swift */,
 				CB574B3B2A63E18E0054FEE9 /* ViewController.swift */,
-				CB574B3D2A63E18E0054FEE9 /* Main.storyboard */,
 				CB574B402A63E18F0054FEE9 /* Assets.xcassets */,
-				CB574B422A63E18F0054FEE9 /* LaunchScreen.storyboard */,
-				CB574B452A63E18F0054FEE9 /* Info.plist */,
-				CBF85A522A6D0D7D000D3F8F /* Home */,
+				CBA642C62A751FC400269578 /* Feature */,
 				CBF85A552A6D23CB000D3F8F /* Extension */,
+				CB574B422A63E18F0054FEE9 /* LaunchScreen.storyboard */,
+				CB574B3D2A63E18E0054FEE9 /* Main.storyboard */,
 			);
 			path = SampleApp;
+			sourceTree = "<group>";
+		};
+		CBA642BA2A751F6400269578 /* InternalDTO */ = {
+			isa = PBXGroup;
+			children = (
+				CB25ADFE2A6591580015A62A /* HomeViewStateAction.swift */,
+			);
+			path = InternalDTO;
+			sourceTree = "<group>";
+		};
+		CBA642BB2A751F8600269578 /* Account */ = {
+			isa = PBXGroup;
+			children = (
+				CBA642C92A7522A800269578 /* InternalDTO */,
+				CBA642C52A751FB200269578 /* RIB */,
+				CBA642C42A751FA900269578 /* View */,
+			);
+			path = Account;
+			sourceTree = "<group>";
+		};
+		CBA642C42A751FA900269578 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CBA642BD2A751FA000269578 /* AccountViewController.swift */,
+				CBA642C72A751FFA00269578 /* AccountView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CBA642C52A751FB200269578 /* RIB */ = {
+			isa = PBXGroup;
+			children = (
+				CBA642CF2A75236200269578 /* Presentable */,
+				CBA642BC2A751FA000269578 /* AccountRouter.swift */,
+				CBA642BE2A751FA000269578 /* AccountBuilder.swift */,
+				CBA642BF2A751FA000269578 /* AccountInteractor.swift */,
+			);
+			path = RIB;
+			sourceTree = "<group>";
+		};
+		CBA642C62A751FC400269578 /* Feature */ = {
+			isa = PBXGroup;
+			children = (
+				CBA642BB2A751F8600269578 /* Account */,
+				CBF85A522A6D0D7D000D3F8F /* Home */,
+			);
+			path = Feature;
+			sourceTree = "<group>";
+		};
+		CBA642C92A7522A800269578 /* InternalDTO */ = {
+			isa = PBXGroup;
+			children = (
+				CBA642CA2A7522C300269578 /* AccountViewStateAction.swift */,
+			);
+			path = InternalDTO;
+			sourceTree = "<group>";
+		};
+		CBA642CC2A75230200269578 /* Presentable */ = {
+			isa = PBXGroup;
+			children = (
+				CBA642CD2A75232E00269578 /* HomeViewController+Extension.swift */,
+			);
+			path = Presentable;
+			sourceTree = "<group>";
+		};
+		CBA642CF2A75236200269578 /* Presentable */ = {
+			isa = PBXGroup;
+			children = (
+				CBA642D02A75238500269578 /* AccountViewPresenter.swift */,
+			);
+			path = Presentable;
 			sourceTree = "<group>";
 		};
 		CBF85A502A6D0D37000D3F8F /* View */ = {
@@ -99,6 +186,7 @@
 		CBF85A512A6D0D71000D3F8F /* RIB */ = {
 			isa = PBXGroup;
 			children = (
+				CBA642CC2A75230200269578 /* Presentable */,
 				CB25ADF62A6590D30015A62A /* HomeRouter.swift */,
 				CB25ADF82A6590D30015A62A /* HomeBuilder.swift */,
 				CB25ADF92A6590D30015A62A /* HomeInteractor.swift */,
@@ -109,7 +197,7 @@
 		CBF85A522A6D0D7D000D3F8F /* Home */ = {
 			isa = PBXGroup;
 			children = (
-				CB25ADFE2A6591580015A62A /* HomeViewStateAction.swift */,
+				CBA642BA2A751F6400269578 /* InternalDTO */,
 				CBF85A512A6D0D71000D3F8F /* RIB */,
 				CBF85A502A6D0D37000D3F8F /* View */,
 			);
@@ -202,17 +290,25 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBA642C02A751FA000269578 /* AccountRouter.swift in Sources */,
 				CB574B3C2A63E18E0054FEE9 /* ViewController.swift in Sources */,
+				CBA642C12A751FA000269578 /* AccountViewController.swift in Sources */,
 				CB574B382A63E18E0054FEE9 /* AppDelegate.swift in Sources */,
+				CBA642C82A751FFA00269578 /* AccountView.swift in Sources */,
+				CBA642D12A75238500269578 /* AccountViewPresenter.swift in Sources */,
 				CB25AE012A6595E80015A62A /* HomeView.swift in Sources */,
 				CBF85A542A6D0F41000D3F8F /* Array+Extension.swift in Sources */,
 				CB25ADFD2A6590D30015A62A /* HomeInteractor.swift in Sources */,
 				CB25ADFC2A6590D30015A62A /* HomeBuilder.swift in Sources */,
+				CBA642C32A751FA000269578 /* AccountInteractor.swift in Sources */,
 				CB574B3A2A63E18E0054FEE9 /* SceneDelegate.swift in Sources */,
 				CBF85A4F2A6ABD10000D3F8F /* View+Extension.swift in Sources */,
 				CB25ADFF2A6591580015A62A /* HomeViewStateAction.swift in Sources */,
+				CBA642C22A751FA000269578 /* AccountBuilder.swift in Sources */,
+				CBA642CB2A7522C300269578 /* AccountViewStateAction.swift in Sources */,
 				CB25ADFA2A6590D30015A62A /* HomeRouter.swift in Sources */,
 				CB25ADFB2A6590D30015A62A /* HomeViewController.swift in Sources */,
+				CBA642CE2A75232E00269578 /* HomeViewController+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

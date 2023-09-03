@@ -12,7 +12,7 @@ class HomeViewModel: ObservableObject {
     typealias State = HomeViewState
     typealias Action = HomeViewAction
 
-    weak var listener: HomePresentableListener? = nil
+    weak var listener: HomePresentableListener?
 
     @Published var state: State
 
@@ -44,7 +44,7 @@ struct HomeView: View {
                 Button("Tap1 Action Button") {
                     viewModel.request(action: .tap1)
                 }
-                
+
                 Button("Tap2 Action Button") {
                     viewModel.request(action: .tap2)
                 }
@@ -85,9 +85,7 @@ struct HomeView_Previews: PreviewProvider {
     typealias ViewModel = HomeViewModel
 
     class Listener: HomePresentableListener {
-        var viewModel: ViewModel? {
-            didSet { viewModel?.listener = self }
-        }
+        var viewModel: ViewModel?
 
         @MainActor func request(action: Action) {
             let state: State
@@ -105,13 +103,15 @@ struct HomeView_Previews: PreviewProvider {
             viewModel?.update(state: state)
         }
     }
-    
+
     static let listener = Listener()
-    
+
     static var previews: some View {
         let state = State(title: "Hello", desc: "World")
-        let view = HomeView(viewModel: .init(state: state))
-        listener.viewModel = view.viewModel
+        let vm = HomeViewModel(listener: listener, state: state)
+        let view = HomeView(viewModel: vm)
+        listener.viewModel = vm
+
         var count = 0
         return VStack {
             Button("Mock Action") {

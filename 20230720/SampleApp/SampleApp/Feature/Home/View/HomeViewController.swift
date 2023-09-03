@@ -5,33 +5,29 @@
 //  Created by minsOne on 2023/07/18.
 //
 
-import UIKit
 import SwiftUI
+import UIKit
 
 protocol HomePresentableListener: AnyObject {
     func request(action: HomeViewAction)
 }
 
-final class HomeViewController: UIViewController, HomePresentable, HomeViewControllable {
-    weak var listener: HomePresentableListener? {
-        didSet {
-            viewModel.listener = listener
-        }
-    }
-    
-    let viewModel = HomeViewModel(state: .init(title: "Hello", desc: "World"))
-    
+final class HomeViewController: UIViewController {
+    weak var listener: HomePresentableListener?
+
+    lazy var viewModel = HomeViewModel(listener: listener, state: .init(title: "Hello", desc: "World"))
+
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+
         title = "Hello World"
-        
+
         HomeView(viewModel: viewModel)
             .attachTo(ViewController: self)
-        
+
         listener?.request(action: .viewDidLoad)
     }
-    
+
     public func update(state: HomeViewState) {
         viewModel.update(state: state)
     }
@@ -46,7 +42,7 @@ extension View {
         contentVC.view.translatesAutoresizingMaskIntoConstraints = false
         parentVC.view.addSubview(contentVC.view)
         contentVC.didMove(toParent: parentVC)
-        
+
         NSLayoutConstraint.activate([
             contentVC.view.topAnchor.constraint(equalTo: parentVC.view.topAnchor),
             contentVC.view.bottomAnchor.constraint(equalTo: parentVC.view.bottomAnchor),

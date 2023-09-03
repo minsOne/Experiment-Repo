@@ -25,7 +25,7 @@ final class HomeInteractor: PresentableInteractor<HomePresentable>, HomeInteract
         super.init(presenter: presenter)
         presenter.listener = self
     }
-    
+
     func request(action: HomeViewAction) {
         let state: HomeViewState
         switch action {
