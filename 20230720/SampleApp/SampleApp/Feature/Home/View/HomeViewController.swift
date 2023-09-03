@@ -52,4 +52,23 @@ extension View {
     }
 }
 
+extension UIViewController {
+    func attach(view: some View) {
+        let contentVC = UIHostingController(rootView: view)
+        let parentVC = self
+
+        parentVC.addChild(contentVC)
+        contentVC.view.translatesAutoresizingMaskIntoConstraints = false
+        parentVC.view.addSubview(contentVC.view)
+        contentVC.didMove(toParent: parentVC)
+
+        NSLayoutConstraint.activate([
+            contentVC.view.topAnchor.constraint(equalTo: parentVC.view.topAnchor),
+            contentVC.view.bottomAnchor.constraint(equalTo: parentVC.view.bottomAnchor),
+            contentVC.view.leadingAnchor.constraint(equalTo: parentVC.view.leadingAnchor),
+            contentVC.view.trailingAnchor.constraint(equalTo: parentVC.view.trailingAnchor),
+        ])
+    }
+}
+
 /// https://speakerdeck.com/kuritatu18/uikit-besunoda-gui-mo-napuroziekutoheno-swiftui-dao-ru?slide=30
