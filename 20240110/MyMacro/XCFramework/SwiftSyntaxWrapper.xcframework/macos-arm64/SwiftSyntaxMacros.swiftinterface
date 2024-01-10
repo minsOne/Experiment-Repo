@@ -1,0 +1,109 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.9.2 (swiftlang-5.9.2.2.56 clang-1500.1.0.2.5)
+// swift-module-flags: -target arm64-apple-macosx10.15 -enable-objc-interop -enable-library-evolution -swift-version 5 -Onone -module-name SwiftSyntaxMacros
+import Swift
+import SwiftDiagnostics
+import SwiftSyntax
+import SwiftSyntaxBuilder
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public struct AbstractSourceLocation {
+  public let file: SwiftSyntax.ExprSyntax
+  public let line: SwiftSyntax.ExprSyntax
+  public let column: SwiftSyntax.ExprSyntax
+  public init(file: SwiftSyntax.ExprSyntax, line: SwiftSyntax.ExprSyntax, column: SwiftSyntax.ExprSyntax)
+  public init(_ sourceLocation: SwiftSyntax.SourceLocation)
+}
+public protocol MacroExpansionContext : AnyObject {
+  func makeUniqueName(_ name: Swift.String) -> SwiftSyntax.TokenSyntax
+  func diagnose(_ diagnostic: SwiftDiagnostics.Diagnostic)
+  func location(of node: some SyntaxProtocol, at position: SwiftSyntaxMacros.PositionInSyntaxNode, filePathMode: SwiftSyntaxMacros.SourceLocationFilePathMode) -> SwiftSyntaxMacros.AbstractSourceLocation?
+}
+extension SwiftSyntaxMacros.MacroExpansionContext {
+  public func location(of node: some SyntaxProtocol) -> SwiftSyntaxMacros.AbstractSourceLocation?
+}
+extension SwiftSyntaxMacros.MacroExpansionContext {
+  public func addDiagnostics(from error: any Swift.Error, node: some SyntaxProtocol)
+}
+public enum PositionInSyntaxNode {
+  case beforeLeadingTrivia
+  case afterLeadingTrivia
+  case beforeTrailingTrivia
+  case afterTrailingTrivia
+  public static func == (a: SwiftSyntaxMacros.PositionInSyntaxNode, b: SwiftSyntaxMacros.PositionInSyntaxNode) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum SourceLocationFilePathMode {
+  case fileID
+  case filePath
+  public static func == (a: SwiftSyntaxMacros.SourceLocationFilePathMode, b: SwiftSyntaxMacros.SourceLocationFilePathMode) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol AccessorMacro : SwiftSyntaxMacros.AttachedMacro {
+  static func expansion(of node: SwiftSyntax.AttributeSyntax, providingAccessorsOf declaration: some DeclSyntaxProtocol, in context: some MacroExpansionContext) throws -> [SwiftSyntax.AccessorDeclSyntax]
+}
+public protocol AttachedMacro : SwiftSyntaxMacros.Macro {
+}
+public protocol CodeItemMacro : SwiftSyntaxMacros.FreestandingMacro {
+  static func expansion(of node: some FreestandingMacroExpansionSyntax, in context: some MacroExpansionContext) throws -> [SwiftSyntax.CodeBlockItemSyntax]
+}
+public protocol DeclarationMacro : SwiftSyntaxMacros.FreestandingMacro {
+  static func expansion(of node: some FreestandingMacroExpansionSyntax, in context: some MacroExpansionContext) throws -> [SwiftSyntax.DeclSyntax]
+  static var propagateFreestandingMacroAttributes: Swift.Bool { get }
+  static var propagateFreestandingMacroModifiers: Swift.Bool { get }
+}
+extension SwiftSyntaxMacros.DeclarationMacro {
+  public static var propagateFreestandingMacroAttributes: Swift.Bool {
+    get
+  }
+  public static var propagateFreestandingMacroModifiers: Swift.Bool {
+    get
+  }
+}
+public protocol ExpressionMacro : SwiftSyntaxMacros.FreestandingMacro {
+  static func expansion(of node: some FreestandingMacroExpansionSyntax, in context: some MacroExpansionContext) throws -> SwiftSyntax.ExprSyntax
+}
+public protocol ExtensionMacro : SwiftSyntaxMacros.AttachedMacro {
+  static func expansion(of node: SwiftSyntax.AttributeSyntax, attachedTo declaration: some DeclGroupSyntax, providingExtensionsOf type: some TypeSyntaxProtocol, conformingTo protocols: [SwiftSyntax.TypeSyntax], in context: some MacroExpansionContext) throws -> [SwiftSyntax.ExtensionDeclSyntax]
+}
+public protocol FreestandingMacro : SwiftSyntaxMacros.Macro {
+}
+public enum FormatMode {
+  case auto
+  case disabled
+  public static func == (a: SwiftSyntaxMacros.FormatMode, b: SwiftSyntaxMacros.FormatMode) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension SwiftSyntaxMacros.Macro {
+  public static var formatMode: SwiftSyntaxMacros.FormatMode {
+    get
+  }
+}
+public protocol Macro {
+  static var formatMode: SwiftSyntaxMacros.FormatMode { get }
+}
+public protocol MemberAttributeMacro : SwiftSyntaxMacros.AttachedMacro {
+  static func expansion(of node: SwiftSyntax.AttributeSyntax, attachedTo declaration: some DeclGroupSyntax, providingAttributesFor member: some DeclSyntaxProtocol, in context: some MacroExpansionContext) throws -> [SwiftSyntax.AttributeSyntax]
+}
+public protocol MemberMacro : SwiftSyntaxMacros.AttachedMacro {
+  static func expansion(of node: SwiftSyntax.AttributeSyntax, providingMembersOf declaration: some DeclGroupSyntax, in context: some MacroExpansionContext) throws -> [SwiftSyntax.DeclSyntax]
+}
+public protocol PeerMacro : SwiftSyntaxMacros.AttachedMacro {
+  static func expansion(of node: SwiftSyntax.AttributeSyntax, providingPeersOf declaration: some DeclSyntaxProtocol, in context: some MacroExpansionContext) throws -> [SwiftSyntax.DeclSyntax]
+}
+extension SwiftSyntaxMacros.PositionInSyntaxNode : Swift.Equatable {}
+extension SwiftSyntaxMacros.PositionInSyntaxNode : Swift.Hashable {}
+extension SwiftSyntaxMacros.SourceLocationFilePathMode : Swift.Equatable {}
+extension SwiftSyntaxMacros.SourceLocationFilePathMode : Swift.Hashable {}
+extension SwiftSyntaxMacros.FormatMode : Swift.Equatable {}
+extension SwiftSyntaxMacros.FormatMode : Swift.Hashable {}

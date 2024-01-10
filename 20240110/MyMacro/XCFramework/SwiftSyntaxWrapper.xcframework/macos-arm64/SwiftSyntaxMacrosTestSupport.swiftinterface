@@ -1,0 +1,38 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.9.2 (swiftlang-5.9.2.2.56 clang-1500.1.0.2.5)
+// swift-module-flags: -target arm64-apple-macosx10.15 -enable-objc-interop -enable-library-evolution -swift-version 5 -Onone -module-name SwiftSyntaxMacrosTestSupport
+import Swift
+import SwiftBasicFormat
+import SwiftDiagnostics
+import SwiftParser
+import SwiftParserDiagnostics
+import SwiftSyntax
+import SwiftSyntaxMacroExpansion
+import SwiftSyntaxMacros
+import XCTest
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+import _SwiftSyntaxTestSupport
+public struct NoteSpec {
+  public let message: Swift.String
+  public let line: Swift.Int
+  public let column: Swift.Int
+  public init(message: Swift.String, line: Swift.Int, column: Swift.Int, originatorFile: Swift.StaticString = #file, originatorLine: Swift.UInt = #line)
+}
+public struct FixItSpec {
+  public let message: Swift.String
+  public init(message: Swift.String, originatorFile: Swift.StaticString = #file, originatorLine: Swift.UInt = #line)
+}
+public struct DiagnosticSpec {
+  public let id: SwiftDiagnostics.MessageID?
+  public let message: Swift.String
+  public let line: Swift.Int
+  public let column: Swift.Int
+  public let severity: SwiftDiagnostics.DiagnosticSeverity
+  public let highlight: Swift.String?
+  public let notes: [SwiftSyntaxMacrosTestSupport.NoteSpec]
+  public let fixIts: [SwiftSyntaxMacrosTestSupport.FixItSpec]
+  public init(id: SwiftDiagnostics.MessageID? = nil, message: Swift.String, line: Swift.Int, column: Swift.Int, severity: SwiftDiagnostics.DiagnosticSeverity = .error, highlight: Swift.String? = nil, notes: [SwiftSyntaxMacrosTestSupport.NoteSpec] = [], fixIts: [SwiftSyntaxMacrosTestSupport.FixItSpec] = [], originatorFile: Swift.StaticString = #file, originatorLine: Swift.UInt = #line)
+}
+public func assertMacroExpansion(_ originalSource: Swift.String, expandedSource expectedExpandedSource: Swift.String, diagnostics: [SwiftSyntaxMacrosTestSupport.DiagnosticSpec] = [], macros: [Swift.String : any SwiftSyntaxMacros.Macro.Type], testModuleName: Swift.String = "TestModule", testFileName: Swift.String = "test.swift", indentationWidth: SwiftSyntax.Trivia = .spaces(4), file: Swift.StaticString = #file, line: Swift.UInt = #line)

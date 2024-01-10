@@ -1,0 +1,105 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.9.2 (swiftlang-5.9.2.2.56 clang-1500.1.0.2.5)
+// swift-module-flags: -target arm64-apple-macosx10.15 -enable-objc-interop -enable-library-evolution -swift-version 5 -Onone -module-name SwiftSyntaxMacroExpansion
+import Swift
+import SwiftBasicFormat
+import SwiftDiagnostics
+import SwiftOperators
+import SwiftParser
+import SwiftSyntax
+import SwiftSyntaxBuilder
+import SwiftSyntaxMacros
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public class BasicMacroExpansionContext {
+  public struct KnownSourceFile {
+    public init(moduleName: Swift.String, fullFilePath: Swift.String)
+  }
+  public init(expansionDiscriminator: Swift.String = "__macro_local_", sourceFiles: [SwiftSyntax.SourceFileSyntax : SwiftSyntaxMacroExpansion.BasicMacroExpansionContext.KnownSourceFile] = [:])
+  public var diagnostics: [SwiftDiagnostics.Diagnostic] {
+    get
+  }
+  @objc deinit
+}
+extension SwiftSyntaxMacroExpansion.BasicMacroExpansionContext {
+  public func detach<Node>(_ node: Node) -> Node where Node : SwiftSyntax.SyntaxProtocol
+}
+extension SwiftSyntaxMacroExpansion.BasicMacroExpansionContext : SwiftSyntaxMacros.MacroExpansionContext {
+  public func makeUniqueName(_ providedName: Swift.String) -> SwiftSyntax.TokenSyntax
+  public func diagnose(_ diagnostic: SwiftDiagnostics.Diagnostic)
+  public func location(for position: SwiftSyntax.AbsolutePosition, anchoredAt node: SwiftSyntax.Syntax, fileName: Swift.String) -> SwiftSyntax.SourceLocation
+  public func location(of node: some SyntaxProtocol, at position: SwiftSyntaxMacros.PositionInSyntaxNode, filePathMode: SwiftSyntaxMacros.SourceLocationFilePathMode) -> SwiftSyntaxMacros.AbstractSourceLocation?
+}
+public enum MacroRole {
+  case expression
+  case declaration
+  case accessor
+  case memberAttribute
+  case member
+  case peer
+  case conformance
+  case codeItem
+  case `extension`
+  public static func == (a: SwiftSyntaxMacroExpansion.MacroRole, b: SwiftSyntaxMacroExpansion.MacroRole) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public func expandFreestandingMacro(definition: any SwiftSyntaxMacros.Macro.Type, macroRole: SwiftSyntaxMacroExpansion.MacroRole, node: any SwiftSyntax.FreestandingMacroExpansionSyntax, in context: some MacroExpansionContext, indentationWidth: SwiftSyntax.Trivia? = nil) -> Swift.String?
+public func inferFreestandingMacroRole(definition: any SwiftSyntaxMacros.Macro.Type) throws -> SwiftSyntaxMacroExpansion.MacroRole
+@available(*, deprecated, message: "pass a macro role, please!")
+public func expandFreestandingMacro(definition: any SwiftSyntaxMacros.Macro.Type, node: any SwiftSyntax.FreestandingMacroExpansionSyntax, in context: some MacroExpansionContext) -> Swift.String?
+public func expandAttachedMacroWithoutCollapsing<Context>(definition: any SwiftSyntaxMacros.Macro.Type, macroRole: SwiftSyntaxMacroExpansion.MacroRole, attributeNode: SwiftSyntax.AttributeSyntax, declarationNode: SwiftSyntax.DeclSyntax, parentDeclNode: SwiftSyntax.DeclSyntax?, extendedType: SwiftSyntax.TypeSyntax?, conformanceList: SwiftSyntax.InheritedTypeListSyntax?, in context: Context, indentationWidth: SwiftSyntax.Trivia? = nil) -> [Swift.String]? where Context : SwiftSyntaxMacros.MacroExpansionContext
+public func expandAttachedMacro<Context>(definition: any SwiftSyntaxMacros.Macro.Type, macroRole: SwiftSyntaxMacroExpansion.MacroRole, attributeNode: SwiftSyntax.AttributeSyntax, declarationNode: SwiftSyntax.DeclSyntax, parentDeclNode: SwiftSyntax.DeclSyntax?, extendedType: SwiftSyntax.TypeSyntax?, conformanceList: SwiftSyntax.InheritedTypeListSyntax?, in context: Context, indentationWidth: SwiftSyntax.Trivia? = nil) -> Swift.String? where Context : SwiftSyntaxMacros.MacroExpansionContext
+public func collapse<Node>(expansions: [Swift.String], for role: SwiftSyntaxMacroExpansion.MacroRole, attachedTo declarationNode: Node, indentationWidth: SwiftSyntax.Trivia? = nil) -> Swift.String where Node : SwiftSyntax.SyntaxProtocol
+public struct MacroExpansionErrorMessage : Swift.Error, SwiftDiagnostics.DiagnosticMessage {
+  public let message: Swift.String
+  public var severity: SwiftDiagnostics.DiagnosticSeverity {
+    get
+  }
+  public var diagnosticID: SwiftDiagnostics.MessageID {
+    get
+  }
+  public init(_ message: Swift.String)
+}
+public struct MacroExpansionWarningMessage : SwiftDiagnostics.DiagnosticMessage {
+  public let message: Swift.String
+  public var severity: SwiftDiagnostics.DiagnosticSeverity {
+    get
+  }
+  public var diagnosticID: SwiftDiagnostics.MessageID {
+    get
+  }
+  public init(_ message: Swift.String)
+}
+public struct MacroExpansionFixItMessage : SwiftDiagnostics.FixItMessage {
+  public var message: Swift.String
+  public var fixItID: SwiftDiagnostics.MessageID {
+    get
+  }
+  public init(_ message: Swift.String)
+}
+public enum MacroDefinition {
+  case deprecatedExternal(node: SwiftSyntax.Syntax, module: Swift.String, type: Swift.String)
+  case expansion(SwiftSyntax.MacroExpansionExprSyntax, replacements: [SwiftSyntaxMacroExpansion.MacroDefinition.Replacement])
+}
+extension SwiftSyntaxMacroExpansion.MacroDefinition {
+  public struct Replacement {
+    public let reference: SwiftSyntax.DeclReferenceExprSyntax
+    public let parameterIndex: Swift.Int
+  }
+}
+extension SwiftSyntax.MacroDeclSyntax {
+  public func checkDefinition() throws -> SwiftSyntaxMacroExpansion.MacroDefinition
+}
+extension SwiftSyntax.MacroDeclSyntax {
+  public func expand(_ node: some FreestandingMacroExpansionSyntax, definition: SwiftSyntax.MacroExpansionExprSyntax, replacements: [SwiftSyntaxMacroExpansion.MacroDefinition.Replacement]) -> SwiftSyntax.ExprSyntax
+  public func expand(_ node: SwiftSyntax.AttributeSyntax, definition: SwiftSyntax.MacroExpansionExprSyntax, replacements: [SwiftSyntaxMacroExpansion.MacroDefinition.Replacement]) -> SwiftSyntax.ExprSyntax
+}
+extension SwiftSyntax.SyntaxProtocol {
+  public func expand(macros: [Swift.String : any SwiftSyntaxMacros.Macro.Type], in context: some MacroExpansionContext, indentationWidth: SwiftSyntax.Trivia? = nil) -> SwiftSyntax.Syntax
+}
+extension SwiftSyntaxMacroExpansion.MacroRole : Swift.Equatable {}
+extension SwiftSyntaxMacroExpansion.MacroRole : Swift.Hashable {}

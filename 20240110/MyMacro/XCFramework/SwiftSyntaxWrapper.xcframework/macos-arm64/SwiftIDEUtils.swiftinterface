@@ -1,0 +1,93 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.9.2 (swiftlang-5.9.2.2.56 clang-1500.1.0.2.5)
+// swift-module-flags: -target arm64-apple-macosx10.15 -enable-objc-interop -enable-library-evolution -swift-version 5 -Onone -module-name SwiftIDEUtils
+import Swift
+import SwiftSyntax
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+extension SwiftIDEUtils.SyntaxClassification {
+  @available(*, deprecated, renamed: "ifConfigDirective")
+  public static var poundDirective: SwiftIDEUtils.SyntaxClassification {
+    get
+  }
+  @available(*, deprecated, renamed: "ifConfigDirective")
+  public static var buildConfigId: SwiftIDEUtils.SyntaxClassification {
+    get
+  }
+  @available(*, deprecated, message: "String interpolation anchors are now classified as .none")
+  public static var stringInterpolationAnchor: SwiftIDEUtils.SyntaxClassification {
+    get
+  }
+  @available(*, deprecated, renamed: "type")
+  public static var typeIdentifier: SwiftIDEUtils.SyntaxClassification {
+    get
+  }
+  @available(*, deprecated, renamed: "operator")
+  public static var operatorIdentifier: SwiftIDEUtils.SyntaxClassification {
+    get
+  }
+  @available(*, deprecated, renamed: "floatLiteral")
+  public static var floatingLiteral: SwiftIDEUtils.SyntaxClassification {
+    get
+  }
+}
+extension SwiftSyntax.SyntaxProtocol {
+  public var classifications: SwiftIDEUtils.SyntaxClassifications {
+    get
+  }
+  public func classifications(in range: SwiftSyntax.ByteSourceRange) -> SwiftIDEUtils.SyntaxClassifications
+  public func classification(at offset: Swift.Int) -> SwiftIDEUtils.SyntaxClassifiedRange?
+  public func classification(at position: SwiftSyntax.AbsolutePosition) -> SwiftIDEUtils.SyntaxClassifiedRange?
+}
+public enum SyntaxClassification {
+  case attribute
+  case blockComment
+  case docBlockComment
+  case docLineComment
+  case dollarIdentifier
+  case editorPlaceholder
+  case floatLiteral
+  case identifier
+  case ifConfigDirective
+  case integerLiteral
+  case keyword
+  case lineComment
+  case none
+  case `operator`
+  case regexLiteral
+  case stringLiteral
+  case type
+  public static func == (a: SwiftIDEUtils.SyntaxClassification, b: SwiftIDEUtils.SyntaxClassification) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+extension SwiftSyntax.TokenSyntax {
+  public var tokenClassification: SwiftIDEUtils.SyntaxClassifiedRange {
+    get
+  }
+}
+public struct SyntaxClassifiedRange : Swift.Equatable {
+  public var kind: SwiftIDEUtils.SyntaxClassification
+  public var range: SwiftSyntax.ByteSourceRange
+  public var offset: Swift.Int {
+    get
+  }
+  public var length: Swift.Int {
+    get
+  }
+  public var endOffset: Swift.Int {
+    get
+  }
+  public static func == (a: SwiftIDEUtils.SyntaxClassifiedRange, b: SwiftIDEUtils.SyntaxClassifiedRange) -> Swift.Bool
+}
+public struct SyntaxClassifications : Swift.Sequence {
+  public typealias Iterator = Swift.Array<SwiftIDEUtils.SyntaxClassifiedRange>.Iterator
+  public init(_ node: SwiftSyntax.Syntax, in relRange: SwiftSyntax.ByteSourceRange)
+  public func makeIterator() -> SwiftIDEUtils.SyntaxClassifications.Iterator
+  public typealias Element = Swift.IndexingIterator<Swift.Array<SwiftIDEUtils.SyntaxClassifiedRange>>.Element
+}
+extension SwiftIDEUtils.SyntaxClassification : Swift.Equatable {}
+extension SwiftIDEUtils.SyntaxClassification : Swift.Hashable {}

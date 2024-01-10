@@ -1,0 +1,43 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.9.2 (swiftlang-5.9.2.2.56 clang-1500.1.0.2.5)
+// swift-module-flags: -target arm64-apple-macosx10.15 -enable-objc-interop -enable-library-evolution -swift-version 5 -Onone -module-name SwiftBasicFormat
+import Swift
+import SwiftSyntax
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+open class BasicFormat : SwiftSyntax.SyntaxRewriter {
+  final public let indentationWidth: SwiftSyntax.Trivia
+  public var indentationStack: [(indentation: SwiftSyntax.Trivia, isUserDefined: Swift.Bool)]
+  public var currentIndentationLevel: SwiftSyntax.Trivia {
+    get
+  }
+  public init(indentationWidth: SwiftSyntax.Trivia? = nil, initialIndentation: SwiftSyntax.Trivia = [], viewMode: SwiftSyntax.SyntaxTreeViewMode = .sourceAccurate)
+  public func increaseIndentationLevel(to userDefinedIndentation: SwiftSyntax.Trivia? = nil)
+  public func decreaseIndentationLevel()
+  override open func visit(_ node: SwiftSyntax.UnexpectedNodesSyntax) -> SwiftSyntax.UnexpectedNodesSyntax
+  override open func visitPre(_ node: SwiftSyntax.Syntax)
+  override open func visitPost(_ node: SwiftSyntax.Syntax)
+  open var inferInitialTokenIndentation: Swift.Bool {
+    get
+  }
+  open func requiresIndent(_ node: some SyntaxProtocol) -> Swift.Bool
+  open func requiresNewline(between first: SwiftSyntax.TokenSyntax?, and second: SwiftSyntax.TokenSyntax?) -> Swift.Bool
+  open func requiresWhitespace(between first: SwiftSyntax.TokenSyntax?, and second: SwiftSyntax.TokenSyntax?) -> Swift.Bool
+  open func isMutable(_ token: SwiftSyntax.TokenSyntax) -> Swift.Bool
+  open func transformTokenText(_ token: SwiftSyntax.TokenSyntax) -> Swift.String?
+  open func transformTokenPresence(_ token: SwiftSyntax.TokenSyntax) -> SwiftSyntax.SourcePresence?
+  override open func visit(_ token: SwiftSyntax.TokenSyntax) -> SwiftSyntax.TokenSyntax
+  @objc deinit
+}
+extension SwiftSyntax.TokenSyntax {
+  public var indentationOfLine: SwiftSyntax.Trivia {
+    get
+  }
+}
+extension SwiftSyntax.SyntaxProtocol {
+  public func formatted(using format: SwiftBasicFormat.BasicFormat = BasicFormat()) -> SwiftSyntax.Syntax
+}
+extension SwiftSyntax.Trivia {
+  public func indentation(isOnNewline: Swift.Bool) -> SwiftSyntax.Trivia?
+}

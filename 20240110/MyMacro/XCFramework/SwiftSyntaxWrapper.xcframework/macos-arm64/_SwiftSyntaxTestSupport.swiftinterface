@@ -1,0 +1,77 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.9.2 (swiftlang-5.9.2.2.56 clang-1500.1.0.2.5)
+// swift-module-flags: -target arm64-apple-macosx10.15 -enable-objc-interop -enable-library-evolution -swift-version 5 -Onone -module-name _SwiftSyntaxTestSupport
+import Foundation
+import Swift
+import SwiftBasicFormat
+import SwiftParser
+import SwiftSyntax
+import SwiftSyntaxBuilder
+import XCTest
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public func assertStringsEqualWithDiff(_ actual: Swift.String, _ expected: Swift.String, _ message: Swift.String = "", additionalInfo: @autoclosure () -> Swift.String? = nil, file: Swift.StaticString = #file, line: Swift.UInt = #line)
+public func assertDataEqualWithDiff(_ actual: Foundation.Data, _ expected: Foundation.Data, _ message: Swift.String = "", additionalInfo: @autoclosure () -> Swift.String? = nil, file: Swift.StaticString = #file, line: Swift.UInt = #line)
+public func failStringsEqualWithDiff(_ actual: Swift.String, _ expected: Swift.String, _ message: Swift.String = "", additionalInfo: @autoclosure () -> Swift.String? = nil, file: Swift.StaticString = #file, line: Swift.UInt = #line)
+public func assertIncrementalParse(_ source: Swift.String, reusedNodes expectedReusedNodes: [_SwiftSyntaxTestSupport.ReusedNodeSpec] = [], file: Swift.StaticString = #file, line: Swift.UInt = #line)
+public func byteSourceRange(for substring: Swift.String, in sourceString: Swift.String, after: Swift.String.Index) -> SwiftSyntax.ByteSourceRange?
+public struct ReusedNodeSpec {
+  public init(_ source: Swift.String, kind: SwiftSyntax.SyntaxKind, file: Swift.StaticString = #file, line: Swift.UInt = #line)
+}
+public func extractEditsAndSources(from source: Swift.String) -> (edits: SwiftParser.ConcurrentEdits, orignialSource: Swift.Substring, editedSource: Swift.Substring)
+public func applyEdits(_ edits: [SwiftSyntax.IncrementalEdit], concurrent: Swift.Bool, to testString: Swift.String, replacementChar: Swift.Character = "?") -> Swift.String
+public func extractMarkers(_ markedText: Swift.String) -> (markers: [Swift.String : Swift.Int], textWithoutMarkers: Swift.String)
+extension Swift.String {
+  public func trimmingTrailingWhitespace() -> Swift.String
+}
+public func XCTAssertNext<Iterator>(_ iterator: inout Iterator, satisfies predicate: (Iterator.Element) throws -> Swift.Bool, file: Swift.StaticString = #filePath, line: Swift.UInt = #line) throws where Iterator : Swift.IteratorProtocol
+public func XCTAssertNextIsNil<Iterator>(_ iterator: inout Iterator) where Iterator : Swift.IteratorProtocol
+public struct SubtreeMatcher {
+  public init(_ markedText: Swift.String, parse: (Swift.String) throws -> SwiftSyntax.Syntax) rethrows
+  public init(_ actualTree: some SyntaxProtocol, markers: [Swift.String : Swift.Int])
+  public func findFirstDifference(afterMarker: Swift.String? = nil, baseline: some SyntaxProtocol, includeTrivia: Swift.Bool = false) throws -> _SwiftSyntaxTestSupport.TreeDifference?
+  public func assertSameStructure(afterMarker: Swift.String? = nil, _ expected: some SyntaxProtocol, includeTrivia: Swift.Bool = false, additionalInfo: Swift.String? = nil, file: Swift.StaticString = #filePath, line: Swift.UInt = #line) throws
+}
+public enum SubtreeError : Swift.Error, Swift.CustomStringConvertible {
+  case invalidMarker(name: Swift.String)
+  case invalidSubtree(tree: SwiftSyntax.Syntax, afterUTF8Offset: Swift.Int, type: Swift.String)
+  public var description: Swift.String {
+    get
+  }
+}
+extension SwiftSyntax.SyntaxCollection {
+  public func child(at index: Swift.Int) -> Self.Element?
+  public subscript(index: Swift.Int) -> Self.Element {
+    get
+  }
+}
+public enum DifferenceReason {
+  case nodeType, presence, missingNode, additionalNode, trivia, token
+  public static func == (a: _SwiftSyntaxTestSupport.DifferenceReason, b: _SwiftSyntaxTestSupport.DifferenceReason) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public struct TreeDifference {
+  public let node: SwiftSyntax.Syntax
+  public let baseline: SwiftSyntax.Syntax
+  public let reason: _SwiftSyntaxTestSupport.DifferenceReason
+  public init(node: some SyntaxProtocol, baseline: some SyntaxProtocol, reason: _SwiftSyntaxTestSupport.DifferenceReason)
+}
+extension _SwiftSyntaxTestSupport.TreeDifference : Swift.CustomDebugStringConvertible {
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+extension SwiftSyntax.SyntaxProtocol {
+  public func findFirstDifference(baseline: some SyntaxProtocol, includeTrivia: Swift.Bool = false) -> _SwiftSyntaxTestSupport.TreeDifference?
+}
+extension SwiftSyntax.SyntaxProtocol {
+  @available(*, deprecated, message: "For use in debugger only")
+  public func debugInitCall(includeTrivia: Swift.Bool = true) -> Swift.String
+}
+public func getTestInput(_ file: Swift.String, baseFile: Swift.String = #file) -> Foundation.URL
+extension _SwiftSyntaxTestSupport.DifferenceReason : Swift.Equatable {}
+extension _SwiftSyntaxTestSupport.DifferenceReason : Swift.Hashable {}

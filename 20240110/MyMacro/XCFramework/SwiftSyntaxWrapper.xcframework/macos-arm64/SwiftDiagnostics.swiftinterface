@@ -1,0 +1,117 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.9.2 (swiftlang-5.9.2.2.56 clang-1500.1.0.2.5)
+// swift-module-flags: -target arm64-apple-macosx10.15 -enable-objc-interop -enable-library-evolution -swift-version 5 -Onone -module-name SwiftDiagnostics
+import Swift
+import SwiftSyntax
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+extension SwiftDiagnostics.Diagnostic {
+  public init(node: some SyntaxProtocol, position: SwiftSyntax.AbsolutePosition? = nil, message: any SwiftDiagnostics.DiagnosticMessage, highlights: [SwiftSyntax.Syntax]? = nil, notes: [SwiftDiagnostics.Note] = [], fixIt: SwiftDiagnostics.FixIt)
+}
+extension SwiftDiagnostics.FixIt {
+  public static func replace(message: any SwiftDiagnostics.FixItMessage, oldNode: some SyntaxProtocol, newNode: some SyntaxProtocol) -> SwiftDiagnostics.FixIt
+}
+public struct Diagnostic : Swift.CustomDebugStringConvertible {
+  public let diagMessage: any SwiftDiagnostics.DiagnosticMessage
+  public let node: SwiftSyntax.Syntax
+  public let position: SwiftSyntax.AbsolutePosition
+  public let highlights: [SwiftSyntax.Syntax]
+  public let notes: [SwiftDiagnostics.Note]
+  public let fixIts: [SwiftDiagnostics.FixIt]
+  public init(node: some SyntaxProtocol, position: SwiftSyntax.AbsolutePosition? = nil, message: any SwiftDiagnostics.DiagnosticMessage, highlights: [SwiftSyntax.Syntax]? = nil, notes: [SwiftDiagnostics.Note] = [], fixIts: [SwiftDiagnostics.FixIt] = [])
+  public var message: Swift.String {
+    get
+  }
+  public var diagnosticID: SwiftDiagnostics.MessageID {
+    get
+  }
+  public func location(converter: SwiftSyntax.SourceLocationConverter) -> SwiftSyntax.SourceLocation
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+public struct DiagnosticsError : Swift.Error {
+  public var diagnostics: [SwiftDiagnostics.Diagnostic]
+  public init(diagnostics: [SwiftDiagnostics.Diagnostic])
+}
+public struct DiagnosticsFormatter {
+  public let contextSize: Swift.Int
+  public let colorize: Swift.Bool
+  public init(contextSize: Swift.Int = 2, colorize: Swift.Bool = false)
+  public static func annotatedSource(tree: some SyntaxProtocol, diags: [SwiftDiagnostics.Diagnostic], contextSize: Swift.Int = 2, colorize: Swift.Bool = false) -> Swift.String
+  public func annotatedSource(tree: some SyntaxProtocol, diags: [SwiftDiagnostics.Diagnostic]) -> Swift.String
+}
+public protocol FixItMessage {
+  var message: Swift.String { get }
+  var fixItID: SwiftDiagnostics.MessageID { get }
+}
+public struct FixIt {
+  public enum Change {
+    case replace(oldNode: SwiftSyntax.Syntax, newNode: SwiftSyntax.Syntax)
+    case replaceLeadingTrivia(token: SwiftSyntax.TokenSyntax, newTrivia: SwiftSyntax.Trivia)
+    case replaceTrailingTrivia(token: SwiftSyntax.TokenSyntax, newTrivia: SwiftSyntax.Trivia)
+  }
+  public let message: any SwiftDiagnostics.FixItMessage
+  public let changes: [SwiftDiagnostics.FixIt.Change]
+  public init(message: any SwiftDiagnostics.FixItMessage, changes: [SwiftDiagnostics.FixIt.Change])
+}
+public struct GroupedDiagnostics {
+  public struct SourceFileID : Swift.Equatable, Swift.Hashable {
+    public static func == (a: SwiftDiagnostics.GroupedDiagnostics.SourceFileID, b: SwiftDiagnostics.GroupedDiagnostics.SourceFileID) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public init()
+  @discardableResult
+  public mutating func addSourceFile(tree: SwiftSyntax.SourceFileSyntax, displayName: Swift.String, parent: (SwiftDiagnostics.GroupedDiagnostics.SourceFileID, SwiftSyntax.AbsolutePosition)? = nil, diagnostics: [SwiftDiagnostics.Diagnostic] = []) -> SwiftDiagnostics.GroupedDiagnostics.SourceFileID
+  public mutating func addDiagnostic(_ diagnostic: SwiftDiagnostics.Diagnostic, in knownSourceFileID: SwiftDiagnostics.GroupedDiagnostics.SourceFileID? = nil)
+}
+extension SwiftDiagnostics.DiagnosticsFormatter {
+  public func annotateSources(in group: SwiftDiagnostics.GroupedDiagnostics) -> Swift.String
+  public static func annotateSources(in group: SwiftDiagnostics.GroupedDiagnostics, contextSize: Swift.Int = 2, colorize: Swift.Bool = false) -> Swift.String
+}
+public struct MessageID : Swift.Hashable {
+  public init(domain: Swift.String, id: Swift.String)
+  public func hash(into hasher: inout Swift.Hasher)
+  public static func == (a: SwiftDiagnostics.MessageID, b: SwiftDiagnostics.MessageID) -> Swift.Bool
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public enum DiagnosticSeverity {
+  case error
+  case warning
+  case note
+  public static func == (a: SwiftDiagnostics.DiagnosticSeverity, b: SwiftDiagnostics.DiagnosticSeverity) -> Swift.Bool
+  public func hash(into hasher: inout Swift.Hasher)
+  public var hashValue: Swift.Int {
+    get
+  }
+}
+public protocol DiagnosticMessage {
+  var message: Swift.String { get }
+  var diagnosticID: SwiftDiagnostics.MessageID { get }
+  var severity: SwiftDiagnostics.DiagnosticSeverity { get }
+}
+public protocol NoteMessage {
+  var message: Swift.String { get }
+  var fixItID: SwiftDiagnostics.MessageID { get }
+}
+public struct Note : Swift.CustomDebugStringConvertible {
+  public let node: SwiftSyntax.Syntax
+  public let position: SwiftSyntax.AbsolutePosition
+  public let noteMessage: any SwiftDiagnostics.NoteMessage
+  public init(node: SwiftSyntax.Syntax, position: SwiftSyntax.AbsolutePosition? = nil, message: any SwiftDiagnostics.NoteMessage)
+  public var message: Swift.String {
+    get
+  }
+  public func location(converter: SwiftSyntax.SourceLocationConverter) -> SwiftSyntax.SourceLocation
+  public var debugDescription: Swift.String {
+    get
+  }
+}
+extension SwiftDiagnostics.DiagnosticSeverity : Swift.Equatable {}
+extension SwiftDiagnostics.DiagnosticSeverity : Swift.Hashable {}

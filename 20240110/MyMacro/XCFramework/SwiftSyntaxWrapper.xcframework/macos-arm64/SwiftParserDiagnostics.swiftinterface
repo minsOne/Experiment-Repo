@@ -1,0 +1,717 @@
+// swift-interface-format-version: 1.0
+// swift-compiler-version: Apple Swift version 5.9.2 (swiftlang-5.9.2.2.56 clang-1500.1.0.2.5)
+// swift-module-flags: -target arm64-apple-macosx10.15 -enable-objc-interop -enable-library-evolution -swift-version 5 -Onone -module-name SwiftParserDiagnostics
+import Swift
+import SwiftBasicFormat
+import SwiftDiagnostics
+import SwiftParser
+import SwiftSyntax
+import _Concurrency
+import _StringProcessing
+import _SwiftConcurrencyShims
+public protocol TokenError : SwiftDiagnostics.DiagnosticMessage {
+  var diagnosticID: SwiftDiagnostics.MessageID { get }
+}
+extension SwiftParserDiagnostics.TokenError {
+  public static var diagnosticID: SwiftDiagnostics.MessageID {
+    get
+  }
+  public var diagnosticID: SwiftDiagnostics.MessageID {
+    get
+  }
+  public var severity: SwiftDiagnostics.DiagnosticSeverity {
+    get
+  }
+}
+public enum StaticTokenError : Swift.String, SwiftDiagnostics.DiagnosticMessage {
+  case editorPlaceholder
+  case equalMustHaveConsistentWhitespaceOnBothSides
+  case expectedBinaryExponentInHexFloatLiteral
+  case expectedClosingBraceInUnicodeEscape
+  case expectedDigitInFloatLiteral
+  case expectedHexCodeInUnicodeEscape
+  case expectedHexDigitInHexLiteral
+  case invalidCharacter
+  case invalidEscapeSequenceInStringLiteral
+  case invalidIdentifierStartCharacter
+  case invalidNumberOfHexDigitsInUnicodeEscape
+  case invalidUtf8
+  case tokenDiagnosticOffsetOverflow
+  case sourceConflictMarker
+  case unexpectedBlockCommentEnd
+  case unicodeCurlyQuote
+  case spaceAtStartOfRegexLiteral
+  case spaceAtEndOfRegexLiteral
+  case multilineRegexClosingNotOnNewline
+  case unprintableAsciiCharacter
+  case unterminatedBlockComment
+  public var message: Swift.String {
+    get
+  }
+  public var diagnosticID: SwiftDiagnostics.MessageID {
+    get
+  }
+  public var severity: SwiftDiagnostics.DiagnosticSeverity {
+    get
+  }
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public enum StaticTokenWarning : Swift.String, SwiftDiagnostics.DiagnosticMessage {
+  case nonBreakingSpace
+  case nulCharacter
+  public var message: Swift.String {
+    get
+  }
+  public var diagnosticID: SwiftDiagnostics.MessageID {
+    get
+  }
+  public var severity: SwiftDiagnostics.DiagnosticSeverity {
+    get
+  }
+  public init?(rawValue: Swift.String)
+  public typealias RawValue = Swift.String
+  public var rawValue: Swift.String {
+    get
+  }
+}
+public struct InvalidFloatingPointExponentDigit : SwiftParserDiagnostics.TokenError {
+  public enum Kind {
+    case digit(Swift.Unicode.Scalar)
+    case character(Swift.Unicode.Scalar)
+  }
+  public let kind: SwiftParserDiagnostics.InvalidFloatingPointExponentDigit.Kind
+  public var message: Swift.String {
+    get
+  }
+}
+public struct InvalidDigitInIntegerLiteral : SwiftParserDiagnostics.TokenError {
+  public enum Kind {
+    case binary(Swift.Unicode.Scalar)
+    case octal(Swift.Unicode.Scalar)
+    case decimal(Swift.Unicode.Scalar)
+    case hex(Swift.Unicode.Scalar)
+  }
+  public let kind: SwiftParserDiagnostics.InvalidDigitInIntegerLiteral.Kind
+  public var message: Swift.String {
+    get
+  }
+}
+extension SwiftSyntax.TokenDiagnostic {
+  public func diagnosticMessage(in token: SwiftSyntax.TokenSyntax) -> any SwiftDiagnostics.DiagnosticMessage
+  public func fixIts(in token: SwiftSyntax.TokenSyntax) -> [SwiftDiagnostics.FixIt]
+}
+public struct MissingNodesError : SwiftParserDiagnostics.ParserError {
+  public let missingNodes: [SwiftSyntax.Syntax]
+  public var message: Swift.String {
+    get
+  }
+}
+public struct MatchingOpeningTokenNote : SwiftParserDiagnostics.ParserNote {
+  public var message: Swift.String {
+    get
+  }
+}
+public struct InsertTokenFixIt : SwiftParserDiagnostics.ParserFixIt {
+  public let missingNodes: [SwiftSyntax.Syntax]
+  public var message: Swift.String {
+    get
+  }
+}
+@_hasMissingDesignatedInitializers public class ParseDiagnosticsGenerator : SwiftSyntax.SyntaxAnyVisitor {
+  public static func diagnostics(for tree: some SyntaxProtocol) -> [SwiftDiagnostics.Diagnostic]
+  public func exchangeTokens(unexpected: SwiftSyntax.UnexpectedNodesSyntax?, unexpectedTokenCondition: (SwiftSyntax.TokenSyntax) -> Swift.Bool, correctTokens: [SwiftSyntax.TokenSyntax?], message: (_ misplacedTokens: [SwiftSyntax.TokenSyntax]) -> some DiagnosticMessage, moveFixIt: (_ misplacedTokens: [SwiftSyntax.TokenSyntax]) -> any SwiftDiagnostics.FixItMessage, removeRedundantFixIt: (_ misplacedTokens: [SwiftSyntax.TokenSyntax]) -> (any SwiftDiagnostics.FixItMessage)? = { _ in nil })
+  public func removeToken(_ unexpected: SwiftSyntax.UnexpectedNodesSyntax?, where predicate: (SwiftSyntax.TokenSyntax) -> Swift.Bool, message: (SwiftSyntax.TokenSyntax) -> some DiagnosticMessage)
+  override public func visitAny(_ node: SwiftSyntax.Syntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.UnexpectedNodesSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ token: SwiftSyntax.TokenSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.ArrowExprSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.AccessorEffectSpecifiersSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.AssociatedTypeDeclSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.ArrayTypeSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.AttributeSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.AvailabilityArgumentSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.AvailabilityConditionSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.PlatformVersionSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.CanImportExprSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.CanImportVersionInfoSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.ConditionElementSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.ClosureExprSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.ClosureSignatureSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.CodeBlockItemSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.FunctionEffectSpecifiersSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.GenericRequirementSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.DeinitializerDeclSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.DeinitializerEffectSpecifiersSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.FloatLiteralExprSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.ForStmtSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.FunctionParameterSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.FunctionSignatureSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.FunctionTypeSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.GenericParameterSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.DeclReferenceExprSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.IfConfigClauseSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.IfConfigDeclSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.IfExprSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.InitializerClauseSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.InitializerDeclSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.LabeledSpecializeArgumentSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.MacroExpansionDeclSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.MacroExpansionExprSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.MemberBlockItemSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.MissingDeclSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.MissingExprSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.MissingPatternSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.MissingStmtSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.MissingSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.MissingTypeSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override open func visit(_ node: SwiftSyntax.OriginallyDefinedInAttributeArgumentsSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.OperatorDeclSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.PoundSourceLocationSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.PrecedenceGroupAssignmentSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.PrecedenceGroupAssociativitySyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.ReturnStmtSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.SameTypeRequirementSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.SimpleStringLiteralExprSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.SimpleStringLiteralSegmentListSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.SourceFileSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.StringLiteralExprSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.SubscriptDeclSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.SwitchExprSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.SwitchCaseSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.SwitchDefaultLabelSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.ThrowStmtSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.TryExprSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.TupleTypeElementSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.TypeEffectSpecifiersSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.InheritanceClauseSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.TypeInitializerClauseSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.UnavailableFromAsyncAttributeArgumentsSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.UnresolvedTernaryExprSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.VariableDeclSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.VersionTupleSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  override public func visit(_ node: SwiftSyntax.WhileStmtSyntax) -> SwiftSyntax.SyntaxVisitorContinueKind
+  @objc deinit
+}
+public protocol ParserError : SwiftDiagnostics.DiagnosticMessage {
+  var diagnosticID: SwiftDiagnostics.MessageID { get }
+}
+extension SwiftParserDiagnostics.ParserError {
+  public static var diagnosticID: SwiftDiagnostics.MessageID {
+    get
+  }
+  public var diagnosticID: SwiftDiagnostics.MessageID {
+    get
+  }
+  public var severity: SwiftDiagnostics.DiagnosticSeverity {
+    get
+  }
+}
+public protocol ParserNote : SwiftDiagnostics.NoteMessage {
+  var fixItID: SwiftDiagnostics.MessageID { get }
+}
+extension SwiftParserDiagnostics.ParserNote {
+  public static var fixItID: SwiftDiagnostics.MessageID {
+    get
+  }
+  public var fixItID: SwiftDiagnostics.MessageID {
+    get
+  }
+}
+public protocol ParserFixIt : SwiftDiagnostics.FixItMessage {
+  var fixItID: SwiftDiagnostics.MessageID { get }
+}
+extension SwiftParserDiagnostics.ParserFixIt {
+  public static var fixItID: SwiftDiagnostics.MessageID {
+    get
+  }
+  public var fixItID: SwiftDiagnostics.MessageID {
+    get
+  }
+}
+public struct StaticParserError : SwiftDiagnostics.DiagnosticMessage {
+  public let message: Swift.String
+  public var diagnosticID: SwiftDiagnostics.MessageID {
+    get
+  }
+  public var severity: SwiftDiagnostics.DiagnosticSeverity {
+    get
+  }
+}
+extension SwiftDiagnostics.DiagnosticMessage where Self == SwiftParserDiagnostics.StaticParserError {
+  public static var allStatementsInSwitchMustBeCoveredByCase: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var associatedTypeCannotUsePack: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var canImportWrongSecondParameterLabel: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var canImportWrongNumberOfParameter: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var caseOutsideOfSwitchOrEnum: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var classConstraintCanOnlyBeUsedInProtocol: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var consecutiveDeclarationsOnSameLine: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var consecutiveStatementsOnSameLine: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var cStyleForLoop: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var defaultCannotBeUsedWithWhere: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var defaultOutsideOfSwitch: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var deinitCannotHaveName: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var deinitCannotHaveParameters: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var deinitCannotThrow: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var deinitCannotHaveReturnType: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var editorPlaceholderInSourceFile: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var escapedNewlineAtLastLineOfMultiLineStringLiteralNotAllowed: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var expectedColonClass: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var expectedExpressionAfterTry: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var expectedAssignmentInsteadOfComparisonOperator: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var expectedCommaInWhereClause: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var expectedLeftBraceOrIfAfterElse: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var expectedSequenceExpressionInForEachLoop: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var extraTokensAtTheEndOfSourceLocationDirective: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var extraTokensFollowingConditionalCompilationDirective: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var extraRightBracket: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var forbiddenExtendedEscapingString: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var forbiddenInterpolatedString: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var initializerInPattern: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var initializerCannotHaveName: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var initializerCannotHaveResultType: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var invalidFlagAfterPrecedenceGroupAssignment: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var invalidPrecedenceGroupAssociativity: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var joinConditionsUsingComma: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var joinPlatformsUsingComma: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var maximumNestingLevelOverflow: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var missingColonAndExprInTernaryExpr: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var missingColonInTernaryExpr: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var missingConformanceRequirement: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var misspelledAsync: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var misspelledThrows: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var missingFixityInOperatorDeclaration: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var multiLineStringLiteralMustBeginOnNewLine: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var multiLineStringLiteralMustHaveClosingDelimiterOnNewLine: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var operatorShouldBeDeclaredWithoutBody: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var singleQuoteStringLiteral: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var standaloneSemicolonStatement: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var stringLiteralAtSign: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var subscriptsCannotHaveNames: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var tooManyClosingPoundDelimiters: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var tooFewClosingPoundDelimiters: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var tooManyRawStringDelimitersToStartInterpolation: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var tryMustBePlacedOnReturnedExpr: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var tryMustBePlacedOnThrownExpr: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var tryOnInitialValueExpression: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var typeParameterPackEllipsis: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var unexpectedPoundElseSpaceIf: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var unexpectedSemicolon: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+  public static var versionComparisonNotNeeded: SwiftParserDiagnostics.StaticParserError {
+    get
+  }
+}
+public struct AsyncMustPrecedeThrows : SwiftParserDiagnostics.ParserError {
+  public let asyncKeywords: [SwiftSyntax.TokenSyntax]
+  public let throwsKeyword: SwiftSyntax.TokenSyntax
+  public var message: Swift.String {
+    get
+  }
+}
+public struct AvailabilityConditionAsExpression : SwiftParserDiagnostics.ParserError {
+  public let availabilityToken: SwiftSyntax.TokenSyntax
+  public let negatedAvailabilityToken: SwiftSyntax.TokenSyntax
+  public var message: Swift.String {
+    get
+  }
+}
+public struct AvailabilityConditionInExpression : SwiftParserDiagnostics.ParserError {
+  public let availabilityCondition: SwiftSyntax.AvailabilityConditionSyntax
+  public var message: Swift.String {
+    get
+  }
+}
+public struct CannotParseVersionTuple : SwiftParserDiagnostics.ParserError {
+  public let versionTuple: SwiftSyntax.UnexpectedNodesSyntax
+  public var message: Swift.String {
+    get
+  }
+}
+public struct DuplicateEffectSpecifiers : SwiftParserDiagnostics.ParserError {
+  public let correctSpecifier: SwiftSyntax.TokenSyntax
+  public let unexpectedSpecifier: SwiftSyntax.TokenSyntax
+  public var message: Swift.String {
+    get
+  }
+}
+public struct EffectsSpecifierAfterArrow : SwiftParserDiagnostics.ParserError {
+  public let effectsSpecifiersAfterArrow: [SwiftSyntax.TokenSyntax]
+  public var message: Swift.String {
+    get
+  }
+}
+public struct ExtraneousCodeAtTopLevel : SwiftParserDiagnostics.ParserError {
+  public let extraneousCode: SwiftSyntax.UnexpectedNodesSyntax
+  public var message: Swift.String {
+    get
+  }
+}
+public struct ExtraneousWhitespace : SwiftParserDiagnostics.ParserError {
+  public let tokenWithWhitespace: SwiftSyntax.TokenSyntax
+  public var message: Swift.String {
+    get
+  }
+}
+public struct IdentifierNotAllowedInOperatorName : SwiftParserDiagnostics.ParserError {
+  public let identifier: SwiftSyntax.TokenSyntax
+  public var message: Swift.String {
+    get
+  }
+}
+public struct InvalidFloatLiteralMissingLeadingZero : SwiftParserDiagnostics.ParserError {
+  public let decimalDigits: SwiftSyntax.TokenSyntax
+  public var message: Swift.String {
+    get
+  }
+}
+public struct InvalidIdentifierError : SwiftParserDiagnostics.ParserError {
+  public let invalidIdentifier: SwiftSyntax.TokenSyntax
+  public let missingIdentifier: SwiftSyntax.TokenSyntax
+  public var message: Swift.String {
+    get
+  }
+}
+public struct InvalidIndentationInMultiLineStringLiteralError : SwiftParserDiagnostics.ParserError {
+  public enum Kind {
+    case insufficientIndentation
+    case unexpectedSpace
+    case unexpectedTab
+    public static func == (a: SwiftParserDiagnostics.InvalidIndentationInMultiLineStringLiteralError.Kind, b: SwiftParserDiagnostics.InvalidIndentationInMultiLineStringLiteralError.Kind) -> Swift.Bool
+    public func hash(into hasher: inout Swift.Hasher)
+    public var hashValue: Swift.Int {
+      get
+    }
+  }
+  public let kind: SwiftParserDiagnostics.InvalidIndentationInMultiLineStringLiteralError.Kind
+  public let lines: Swift.Int
+  public var message: Swift.String {
+    get
+  }
+}
+public struct MissingAttributeArgument : SwiftParserDiagnostics.ParserError {
+  public let attributeName: SwiftSyntax.TypeSyntax
+  public var message: Swift.String {
+    get
+  }
+}
+public struct MissingBothStringQuotesOfStringSegments : SwiftParserDiagnostics.ParserError {
+  public let stringSegments: SwiftSyntax.StringLiteralSegmentListSyntax
+  public var message: Swift.String {
+    get
+  }
+}
+public struct MissingConditionInStatement : SwiftParserDiagnostics.ParserError {
+  public var message: Swift.String {
+    get
+  }
+}
+public struct MissingExpressionInStatement : SwiftParserDiagnostics.ParserError {
+  public var message: Swift.String {
+    get
+  }
+}
+public struct NegatedAvailabilityCondition : SwiftParserDiagnostics.ParserError {
+  public let availabilityCondition: SwiftSyntax.AvailabilityConditionSyntax
+  public let negatedAvailabilityKeyword: SwiftSyntax.TokenSyntax
+  public var message: Swift.String {
+    get
+  }
+}
+public struct SpaceSeparatedIdentifiersError : SwiftParserDiagnostics.ParserError {
+  public let firstToken: SwiftSyntax.TokenSyntax
+  public let additionalTokens: [SwiftSyntax.TokenSyntax]
+  public var message: Swift.String {
+    get
+  }
+}
+public struct SpecifierOnParameterName : SwiftParserDiagnostics.ParserError {
+  public let misplacedSpecifiers: [SwiftSyntax.TokenSyntax]
+  public var message: Swift.String {
+    get
+  }
+}
+public struct TokensNotAllowedInOperatorName : SwiftParserDiagnostics.ParserError {
+  public let tokens: [SwiftSyntax.TokenSyntax]
+  public var message: Swift.String {
+    get
+  }
+}
+public struct TrailingVersionAreIgnored : SwiftParserDiagnostics.ParserError {
+  public let major: SwiftSyntax.TokenSyntax
+  public let components: SwiftSyntax.VersionComponentListSyntax
+  public var message: Swift.String {
+    get
+  }
+  public var severity: SwiftDiagnostics.DiagnosticSeverity
+}
+public struct TryCannotBeUsed : SwiftParserDiagnostics.ParserError {
+  public let nextToken: SwiftSyntax.TokenSyntax
+  public var message: Swift.String {
+    get
+  }
+}
+public struct UnexpectedNodesError : SwiftParserDiagnostics.ParserError {
+  public let unexpectedNodes: SwiftSyntax.UnexpectedNodesSyntax
+  public var message: Swift.String {
+    get
+  }
+}
+public struct UnknownDirectiveError : SwiftParserDiagnostics.ParserError {
+  public let unexpected: SwiftSyntax.UnexpectedNodesSyntax
+  public var message: Swift.String {
+    get
+  }
+}
+public struct UnknownParameterError : SwiftParserDiagnostics.ParserError {
+  public let parameter: SwiftSyntax.TokenSyntax
+  public let validParameters: [SwiftSyntax.TokenSyntax]
+  public var message: Swift.String {
+    get
+  }
+}
+public struct EffectSpecifierDeclaredHere : SwiftParserDiagnostics.ParserNote {
+  public var message: Swift.String {
+    get
+  }
+}
+public struct StaticParserNote : SwiftDiagnostics.NoteMessage {
+  public let message: Swift.String
+  public var fixItID: SwiftDiagnostics.MessageID {
+    get
+  }
+}
+extension SwiftDiagnostics.NoteMessage where Self == SwiftParserDiagnostics.StaticParserNote {
+  public static var shouldMatchIndentationOfClosingQuote: SwiftParserDiagnostics.StaticParserNote {
+    get
+  }
+}
+public struct StaticParserFixIt : SwiftDiagnostics.FixItMessage {
+  public let message: Swift.String
+  public var fixItID: SwiftDiagnostics.MessageID {
+    get
+  }
+}
+extension SwiftDiagnostics.FixItMessage where Self == SwiftParserDiagnostics.StaticParserFixIt {
+  public static var changeIndentationToMatchClosingDelimiter: SwiftParserDiagnostics.StaticParserFixIt {
+    get
+  }
+  public static var insertSemicolon: SwiftParserDiagnostics.StaticParserFixIt {
+    get
+  }
+  public static var insertAttributeArguments: SwiftParserDiagnostics.StaticParserFixIt {
+    get
+  }
+  public static var insertNewline: SwiftParserDiagnostics.StaticParserFixIt {
+    get
+  }
+  public static var insertWhitespace: SwiftParserDiagnostics.StaticParserFixIt {
+    get
+  }
+  public static var joinIdentifiers: SwiftParserDiagnostics.StaticParserFixIt {
+    get
+  }
+  public static var joinIdentifiersWithCamelCase: SwiftParserDiagnostics.StaticParserFixIt {
+    get
+  }
+  public static var removeBackslash: SwiftParserDiagnostics.StaticParserFixIt {
+    get
+  }
+  public static var removeExtraneousDelimiters: SwiftParserDiagnostics.StaticParserFixIt {
+    get
+  }
+  public static var insertExtraClosingPounds: SwiftParserDiagnostics.StaticParserFixIt {
+    get
+  }
+  public static var removeExtraneousWhitespace: SwiftParserDiagnostics.StaticParserFixIt {
+    get
+  }
+  public static var removeOperatorBody: SwiftParserDiagnostics.StaticParserFixIt {
+    get
+  }
+  public static var replaceCurlyQuoteByNormalQuote: SwiftParserDiagnostics.StaticParserFixIt {
+    get
+  }
+  public static var replaceNonBreakingSpaceBySpace: SwiftParserDiagnostics.StaticParserFixIt {
+    get
+  }
+  public static var wrapInBackticks: SwiftParserDiagnostics.StaticParserFixIt {
+    get
+  }
+}
+public struct InsertFixIt : SwiftParserDiagnostics.ParserFixIt {
+  public let tokenToBeInserted: SwiftSyntax.TokenSyntax
+  public var message: Swift.String {
+    get
+  }
+}
+public struct MoveTokensAfterFixIt : SwiftParserDiagnostics.ParserFixIt {
+  public let movedTokens: [SwiftSyntax.TokenSyntax]
+  public let after: SwiftSyntax.TokenKind
+  public var message: Swift.String {
+    get
+  }
+}
+public struct MoveTokensInFrontOfFixIt : SwiftParserDiagnostics.ParserFixIt {
+  public let movedTokens: [SwiftSyntax.TokenSyntax]
+  public let inFrontOf: SwiftSyntax.TokenKind
+  public var message: Swift.String {
+    get
+  }
+}
+public struct MoveTokensInFrontOfTypeFixIt : SwiftParserDiagnostics.ParserFixIt {
+  public let movedTokens: [SwiftSyntax.TokenSyntax]
+  public var message: Swift.String {
+    get
+  }
+}
+public struct RemoveRedundantFixIt : SwiftParserDiagnostics.ParserFixIt {
+  public let removeTokens: [SwiftSyntax.TokenSyntax]
+  public var message: Swift.String {
+    get
+  }
+}
+public struct RemoveNodesFixIt : SwiftParserDiagnostics.ParserFixIt {
+  public let nodesToRemove: [SwiftSyntax.Syntax]
+  public var message: Swift.String {
+    get
+  }
+}
+public struct ReplaceTokensFixIt : SwiftParserDiagnostics.ParserFixIt {
+  public let replaceTokens: [SwiftSyntax.TokenSyntax]
+  public let replacements: [SwiftSyntax.TokenSyntax]
+  public var message: Swift.String {
+    get
+  }
+}
+extension SwiftSyntax.TriviaPiece {
+  public var isBackslash: Swift.Bool {
+    get
+  }
+}
+extension SwiftParserDiagnostics.StaticTokenError : Swift.Equatable {}
+extension SwiftParserDiagnostics.StaticTokenError : Swift.Hashable {}
+extension SwiftParserDiagnostics.StaticTokenError : Swift.RawRepresentable {}
+extension SwiftParserDiagnostics.StaticTokenWarning : Swift.Equatable {}
+extension SwiftParserDiagnostics.StaticTokenWarning : Swift.Hashable {}
+extension SwiftParserDiagnostics.StaticTokenWarning : Swift.RawRepresentable {}
+extension SwiftParserDiagnostics.InvalidIndentationInMultiLineStringLiteralError.Kind : Swift.Equatable {}
+extension SwiftParserDiagnostics.InvalidIndentationInMultiLineStringLiteralError.Kind : Swift.Hashable {}
