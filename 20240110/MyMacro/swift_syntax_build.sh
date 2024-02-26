@@ -5,8 +5,14 @@ SWIFT_SYNTAX_NAME="swift-syntax"
 SWIFT_SYNTAX_REPOSITORY_URL="https://github.com/apple/$SWIFT_SYNTAX_NAME.git"
 SEMVER_PATTERN="^[0-9]+\.[0-9]+\.[0-9]+$"
 WRAPPER_NAME="SwiftSyntaxWrapper"
-ARCH="arm64"
 CONFIGURATION="debug"
+LIBRARY_NAME="lib$WRAPPER_NAME.a"
+XCFRAMEWORK_NAME="$WRAPPER_NAME.xcframework"
+ARCH_LIST=(
+    "x86_64"
+    "arm64"
+)
+UNIVERSAL_ARCH="arm64_x86_64"
 
 #
 # Verify input
@@ -72,15 +78,22 @@ EOF
 # Build the wrapper
 #
 
-swift build --package-path $SWIFT_SYNTAX_NAME --arch $ARCH -c $CONFIGURATION -Xswiftc -enable-library-evolution -Xswiftc -emit-module-interface
+for ARCH in ${ARCH_LIST[@]}; do
+    swift build --package-path $SWIFT_SYNTAX_NAME --arch $ARCH -c $CONFIGURATION -Xswiftc -enable-library-evolution -Xswiftc -emit-module-interface
+done
 
 #
 # Create XCFramework
 #
 
-PATH_TO_LIBRARY="$SWIFT_SYNTAX_NAME/.build/$ARCH-apple-macosx/$CONFIGURATION/lib$WRAPPER_NAME.a"
-XCFRAMEWORK_NAME="$WRAPPER_NAME.xcframework"
-xcodebuild -create-xcframework -library $PATH_TO_LIBRARY -output $XCFRAMEWORK_NAME
+LIBRARY_PATHS=""
+for ARCH in ${ARCH_LIST[@]}; do
+    LIBRARY_PATHS+=" $SWIFT_SYNTAX_NAME/.build/$ARCH-apple-macosx/$CONFIGURATION/$LIBRARY_NAME"
+done
+
+lipo -create $LIBRARY_PATHS -output $LIBRARY_NAME
+
+xcodebuild -create-xcframework -library $LIBRARY_NAME -output $XCFRAMEWORK_NAME
 
 MODULES=(
     "SwiftBasicFormat"
@@ -102,10 +115,11 @@ MODULES=(
 )
 
 for MODULE in ${MODULES[@]}; do
-    PATH_TO_INTERFACE="$SWIFT_SYNTAX_NAME/.build/$ARCH-apple-macosx/${CONFIGURATION}/${MODULE}.build/${MODULE}.swiftinterface"
-    cp "${PATH_TO_INTERFACE}" "${XCFRAMEWORK_NAME}/macos-${ARCH}"
+    PATH_TO_INTERFACE="${SWIFT_SYNTAX_NAME}/.build/x86_64-apple-macosx/${CONFIGURATION}/${MODULE}.build/${MODULE}.swiftinterface"
+    cp "${PATH_TO_INTERFACE}" "${XCFRAMEWORK_NAME}/macos-${UNIVERSAL_ARCH}"
 done
 
-rm -rf swift-syntax
+rm -rf $SWIFT_SYNTAX_NAME
+rm -rf $LIBRARY_NAME
 mkdir -p XCFramework
-mv SwiftSyntaxWrapper.xcframework XCFramework/SwiftSyntaxWrapper.xcframework
+mv $XCFRAMEWORK_NAME XCFramework/$XCFRAMEWORK_NAME
