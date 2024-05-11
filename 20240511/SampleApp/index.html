@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="ko">
+    <head>
+        <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <title>iOS 웹뷰 호출</title>
+                <style>
+                    /* 버튼을 화면 가운데 정렬하고 적당한 크기로 설정하기 위한 CSS */
+                    .centered {
+                        top: 50%;
+                        left: 20%;
+                        transform: translate(10%, 50%);
+                        padding: 50px 75px; /* 버튼의 안쪽 여백 설정 */
+                        font-size: 30px; /* 버튼의 폰트 크기 설정 */
+                    }
+                </style>
+            </head>
+    <body>
+        <button onclick="callLoading()" class="centered">Loading Action</button>
+        <button onclick="callPayment()" class="centered">Payment Action</button>
+        
+        <script>
+            function callLoading() {
+                window.webkit.messageHandlers.actionHandler.postMessage({
+                    "action": "loading",
+                    "uuid": crypto.randomUUID(),
+                    "body": {
+                        "isShow": true
+                    }
+                });
+            }
+            function callPayment() {
+                window.webkit.messageHandlers.actionHandler.postMessage({
+                    "action": "payment",
+                    "uuid": crypto.randomUUID(),
+                    "body": {
+                        "paymentAmount": 123456,
+                        "paymentTransactionId": crypto.randomUUID(),
+                        "paymentId": "202405100941223344",
+                        "paymentGoodsName": "교촌치킨"
+                    }
+                });
+            }
+        </script>
+    </body>
+</html>
