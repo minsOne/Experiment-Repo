@@ -1,4 +1,5 @@
 import RIBs
+import UIKit
 
 protocol SelectCategoryDependency: Dependency {}
 
@@ -15,7 +16,7 @@ final nonisolated class SelectCategoryBuilder: Builder<SelectCategoryDependency>
         let viewController = SelectCategoryViewController()
         let interactor = SelectCategoryInteractor(presenter: viewController)
         interactor.didSelectCategory = onSelect
-        
+
         return SelectCategoryRouter(interactor: interactor, viewController: viewController)
     }
 }
