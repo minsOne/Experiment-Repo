@@ -1,0 +1,24 @@
+{
+  "originHash" : "32585ba74f9ab23f059a8b56883eab30e06fd091f10f786b0fe8d38c8a7389aa",
+  "pins" : [
+    {
+      "identity" : "ribs-ios",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/uber/RIBs-iOS",
+      "state" : {
+        "revision" : "53f7cb391d48c385730df6ce1fb95029bca9d25a",
+        "version" : "1.0.0"
+      }
+    },
+    {
+      "identity" : "rxswift",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/ReactiveX/RxSwift",
+      "state" : {
+        "revision" : "b529ef9b7fa3ba2b38d299df23fc2165f21abbb9",
+        "version" : "6.10.0"
+      }
+    }
+  ],
+  "version" : 3
+}
