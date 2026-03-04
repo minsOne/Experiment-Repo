@@ -1,0 +1,48 @@
+name: DismissProbe
+options:
+  bundleIdPrefix: com.dismissprobe
+  deploymentTarget:
+    iOS: "15.0"
+
+configs:
+  Debug: debug
+  Release: release
+
+targets:
+  DismissProbe:
+    type: application
+    platform: iOS
+    sources:
+      - path: .
+        excludes:
+          - DismissProbeUITests/**
+          - project.yml
+          - DismissProbe.xcodeproj/**
+          - README.md
+          - .DS_Store
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dismissprobe.demo
+        SWIFT_VERSION: 5.9
+        TARGETED_DEVICE_FAMILY: "1,2"
+        INFOPLIST_KEY_UILaunchStoryboardName: LaunchScreen
+        IPHONEOS_DEPLOYMENT_TARGET: 15.0
+        GENERATE_INFOPLIST_FILE: YES
+    resources:
+      - LaunchScreen.storyboard
+    scheme:
+      testTargets:
+        - DismissProbeUITests
+
+  DismissProbeUITests:
+    type: bundle.ui-testing
+    platform: iOS
+    sources: [DismissProbeUITests]
+    dependencies:
+      - target: DismissProbe
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.dismissprobe.demo.UITests
+        SWIFT_VERSION: 5.9
+        IPHONEOS_DEPLOYMENT_TARGET: 15.0
+        GENERATE_INFOPLIST_FILE: YES
