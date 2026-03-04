@@ -33,6 +33,7 @@ final nonisolated class TransferRouter: ViewableRouter<TransferInteractable, Tra
     private let selectCategoryBuilder: SelectCategoryBuildable
     private let confirmBuilder: ConfirmBuildable
     private let resultBuilder: ResultBuildable
+    private let signingBuilder = SigningBuilder()
 
     // Current child
     private var currentChild: ViewableRouting?
@@ -91,7 +92,7 @@ final nonisolated class TransferRouter: ViewableRouter<TransferInteractable, Tra
         let (router, result) = confirmBuilder.build(amount: amount)
         attachChild(router)
         viewController.push(viewController: router.viewControllable)
-        
+
         // ✅ Combine + Never 이므로 try?가 필요 없음
         let action = await result.asyncValue
 
@@ -119,6 +120,52 @@ final nonisolated class TransferRouter: ViewableRouter<TransferInteractable, Tra
         attachChild(router)
         viewController.push(viewController: router.viewControllable)
     }
+    
+    func detachResult() {
+        
+    }
+}
 
-    func detachResult() {}
+extension TransferRouter {
+    func routeToSigning(param: String) async -> String {
+        await withCheckedContinuation { continuation in
+            _routeToSigning(param: param) {
+                continuation.resume(returning: $0)
+            }
+        }
+    }
+    
+    private func _routeToSigning(param: String, onSuccess: @escaping (String) -> Void) {
+        var _router: ViewableRouting?
+
+        let router = signingBuilder.build(onSuccess: { [weak self] signedParameter in
+            guard let self, let _router else { return }
+
+            detachChild(_router)
+            viewController.pop()
+            onSuccess(signedParameter)
+        })
+        _router = router
+        attachChild(router)
+        viewController.push(viewController: router.viewControllable)
+    }
+}
+
+
+
+extension TransferRouter {
+    func routeToSigning(param _: String, onSuccess: @escaping (String) -> Void) {
+        var _router: ViewableRouting?
+
+        let router = signingBuilder.build(onSuccess: { [weak self] signedParameter in
+            guard let self, let _router else { return }
+
+            detachChild(_router)
+            viewController.pop()
+            onSuccess(signedParameter)
+        })
+        _router = router
+        attachChild(router)
+        viewController.push(viewController: router.viewControllable)
+    }
 }

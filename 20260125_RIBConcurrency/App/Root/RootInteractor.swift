@@ -23,28 +23,38 @@ protocol RootInteractable: Interactable, RootListener, TransferListener {
 final nonisolated class RootInteractor: PresentableInteractor<RootPresentable>, RootInteractable, RootPresentableListener {
     weak var router: RootRouting?
     weak var listener: RootListener?
-
+    
     // Add additional dependencies to constructor. Do not perform any logic
     // in constructor.
     override init(presenter: RootPresentable) {
         super.init(presenter: presenter)
         presenter.listener = self
     }
-
+    
     override func didBecomeActive() {
         super.didBecomeActive()
         // Implement business logic here.
     }
-
+    
     override func willResignActive() {
         super.willResignActive()
         // Pause any business logic.
     }
+}
 
+extension RootInteractor {
     func didTapTransfer() {
+        router?.routeToSigning(
+            param: "Param",
+            onSuccess: { [weak self] _ in
+                self?.router?.detachResult()
+            },
+        )
         router?.routeToTransfer()
     }
+}
 
+extension RootInteractor {
     @MainActor
     func didFinishTransfer() {
         router?.detachTransfer()

@@ -7,8 +7,8 @@ import RIBs
 
 final nonisolated class RootRouter: LaunchRouter<RootInteractable, RootViewControllable>, RootRouting {
     private let transferBuilder: TransferBuildable
-    private var transferRouting: ViewableRouting?
-
+    private var transferRouter: ViewableRouting?
+    
     init(interactor: RootInteractable,
          viewController: RootViewControllable,
          transferBuilder: TransferBuildable)
@@ -17,20 +17,24 @@ final nonisolated class RootRouter: LaunchRouter<RootInteractable, RootViewContr
         super.init(interactor: interactor, viewController: viewController)
         interactor.router = self
     }
+}
 
+extension RootRouter {
     @MainActor
     func routeToTransfer() {
         let router = self.transferBuilder.build(withListener: interactor)
-        self.transferRouting = router
+        self.transferRouter = router
         attachChild(router)
         viewController.present(viewController: router.viewControllable)
     }
+}
 
+extension RootRouter {
     @MainActor
     func detachTransfer() {
-        guard let router = transferRouting else { return }
+        guard let router = transferRouter else { return }
         viewController.dismiss(viewController: router.viewControllable)
         detachChild(router)
-        self.transferRouting = nil
+        self.transferRouter = nil
     }
 }

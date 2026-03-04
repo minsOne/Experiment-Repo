@@ -7,20 +7,23 @@ protocol TransferRouting: ViewableRouting {
     func routeToConfirm(amount: Int) async -> ConfirmAction?
     func routeToResult() async
     func detachResult()
+    func routeToSigning(param: String, onSuccess: @escaping (String) -> Void)
+    func routeToSigning(param: String) async -> String
 }
 
 nonisolated protocol TransferPresentable: Presentable {
     var listener: TransferPresentableListener? { get set }
 }
 
-nonisolated protocol TransferListener: AnyObject {
+protocol TransferListener: AnyObject {
     func didFinishTransfer()
 }
 
 final nonisolated class TransferInteractor: PresentableInteractor<TransferPresentable>, TransferInteractable, TransferPresentableListener {
     weak var router: TransferRouting?
     weak var listener: TransferListener?
-    var task: Task<Void, Never>?
+    @MainActor
+    var childTask: Task<Void, any Error>?
 
     override init(presenter: TransferPresentable) {
         super.init(presenter: presenter)
@@ -30,7 +33,7 @@ final nonisolated class TransferInteractor: PresentableInteractor<TransferPresen
     override func didBecomeActive() {
         super.didBecomeActive()
 
-        task = Task { @MainActor [weak self] in
+        Task { @MainActor [weak self] in
             await self?.runTransferFlow()
         }
     }
@@ -77,4 +80,75 @@ final nonisolated class TransferInteractor: PresentableInteractor<TransferPresen
             listener?.didFinishTransfer()
         }
     }
+}
+
+extension TransferInteractor {
+    func finish() {
+        listener?.didFinishTransfer()
+
+        router?.routeToSigning(
+            param: "Param",
+            onSuccess: { [weak self] _ in
+                self?.router?.detachResult()
+            },
+        )
+    }
+}
+
+enum Signing {
+    case 등록, 수정, 해지, 중단
+}
+
+extension TransferInteractor {
+@MainActor
+func didTapConfirm(mode: Signing) {
+    guard childTask == nil else { return }
+
+    childTask = Task { @MainActor [weak self] in
+        defer { self?.childTask = nil }
+        try await self?._didTapConfirm(mode: mode)
+    }
+}
+
+    
+    
+    func _didTapConfirm(mode: Signing) async throws {
+        let signedParam = await router?.routeToSigning(param: "Param")
+        try Task.checkCancellation()
+        guard let signedParam else { return }
+
+        switch mode {
+        case .등록: requestRegister(param: signedParam)
+        case .수정: requestModify(param: signedParam)
+        case .해지: requestClose(param: signedParam)
+        case .중단: requestPause(param: signedParam)
+        }
+    }
+}
+
+// extension TransferInteractor {
+//    func didTapConfirm(mode: Signing) {
+//        Task { @MainActor [weak self] in
+//            try await self?._didTapConfirm(mode: mode)
+//        }
+//        router?.routeToSigning(
+//            param: "Param",
+//            onSuccess: { [weak self, mode] signedParam in
+//                switch mode {
+//                case .등록: self?.requestRegister(param: signedParam)
+//                case .수정: self?.requestModify(param: signedParam)
+//                case .해지: self?.requestClose(param: signedParam)
+//                case .중단: self?.requestPause(param: signedParam)
+//                }
+//
+//            },
+//        )
+//    }
+// }
+
+extension TransferInteractor {
+    func requestRegister(param _: String) {}
+    func requestModify(param _: String) {}
+    func requestClose(param _: String) {}
+    func requestPause(param _: String) {}
 }

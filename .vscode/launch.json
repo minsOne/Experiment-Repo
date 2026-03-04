@@ -1,0 +1,24 @@
+{
+    "configurations": [
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Experiment-Repo}/20260213/SwiftDraw",
+            "name": "Debug swiftdrawcli (20260213/SwiftDraw)",
+            "target": "swiftdrawcli",
+            "configuration": "debug",
+            "preLaunchTask": "swift: Build Debug swiftdrawcli (20260213/SwiftDraw)"
+        },
+        {
+            "type": "swift",
+            "request": "launch",
+            "args": [],
+            "cwd": "${workspaceFolder:Experiment-Repo}/20260213/SwiftDraw",
+            "name": "Release swiftdrawcli (20260213/SwiftDraw)",
+            "target": "swiftdrawcli",
+            "configuration": "release",
+            "preLaunchTask": "swift: Build Release swiftdrawcli (20260213/SwiftDraw)"
+        }
+    ]
+}
