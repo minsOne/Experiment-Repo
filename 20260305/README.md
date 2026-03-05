@@ -127,3 +127,46 @@ let check = ActualDisappearEvaluator.evaluate(self)
 | 시나리오별 이벤트 존재/부재 | 위 매트릭스 조건 충족 |
 | 콘솔/로그 일치 | `viewDidDisappear` 로그 라인이 매트릭스 플래그와 일치 |
 | 오탐 탐지 방지 | 시나리오 7에서 overlay 구간 중 `Scenario7ChildViewController`의 `viewDidDisappear` 미호출 |
+
+## `ActualDisappearEvaluator` 규칙 해설 (상세)
+
+`ActualDisappearEvaluator`는 `viewDidDisappear` 시점에서 “실제 제거 여부”를 판별합니다.
+
+- `interactiveTransitionCancelled`
+  - `transitionCoordinator`가 `isInteractive == true`이면서 `isCancelled == true`인 경우.
+  - **가장 먼저** 처리합니다.
+  - 이유: 스와이프 제스처가 취소된 뒤에도 이벤트 타이밍이 섞여 들어올 수 있어, 이 경우를 최우선으로 제외해야 오탐을 줄일 수 있습니다.
+
+- `beingDismissed`
+  - `isBeingDismissed == true`.
+  - 일반 모달 dismiss 경로의 명시적 신호입니다.
+
+- `movingFromParent`
+  - `isMovingFromParent == true`.
+  - `push -> pop` 계열에서 VC가 부모 컨테이너에서 제거되거나 이동하는 시그널입니다.
+
+- `detachedFromWindowAndNoActiveContainer`
+  - `view.window == nil` 이고 `isOwnedByActiveContainer(...) == false`인 경우.
+  - `isBeingDismissed`/`isMovingFromParent` 플래그가 아직 반영되지 않은 경계 케이스에서 최종 판정으로 사용합니다.
+
+- `ownedByActiveContainer`
+  - 위 모든 종료 조건을 못 충족하고, 현재 활성 컨테이너에 여전히 소유되고 있다고 판단될 때 사용합니다.
+  - 대표적으로 `overCurrentContext`/`fullScreen` 상황에서 아래 VC가 잠깐 가려져도 소유권이 유지되는 경우입니다.
+
+### `isOwnedByActiveContainer` 판단 기준
+
+- `isBeingDismissed`, `isMovingFromParent`가 이미 true면 즉시 false.
+- 네비게이션 컨테이너:
+  - `navigationController != nil`
+  - `navigationController.view.window != nil`
+  - `viewControllers` 배열이 대상 VC를 포함
+- 또는 parent-child 관계:
+  - `parent != nil`
+  - `parent.view.window != nil`
+  - `parent.children` 배열이 대상 VC를 포함
+- 어느 쪽도 아니면 활성 컨테이너 소유로 볼 수 없어 `false`.
+
+### 판단 우선순위를 정한 이유 (한줄 요약)
+
+- 취소(interactive cancel) → 직접 신호(isBeingDismissed / movingFromParent) → 윈도우 분리 + 소유권 부재 → 아직 유지(owned)  
+- 핵심 목적은 “실제로 삭제된 상태”와 “단순히 가려지거나 이동 중인 상태”를 정확히 분리하는 것입니다.

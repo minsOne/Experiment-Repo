@@ -120,29 +120,38 @@ final class DismissProbeUITests: XCTestCase {
         waitScenarioButtonHittable(5, timeout: 4)
 
         let events = lastEventsByVC()
-        let a = events["Scenario5AViewController"]
-        let b = events["Scenario5BViewController"]
         let c = events["Scenario5CViewController"]
 
-        XCTAssertNotNil(a)
-        XCTAssertNotNil(b)
         XCTAssertNotNil(c)
-
-        if let a {
-            XCTAssertFalse(a.isBeingDismissed)
-            XCTAssertFalse(a.isMovingFromParent)
-            XCTAssertTrue(a.viewWindowIsNil)
-        }
-        if let b {
-            XCTAssertFalse(b.isBeingDismissed)
-            XCTAssertFalse(b.isMovingFromParent)
-            XCTAssertTrue(b.viewWindowIsNil)
-        }
         if let c {
             XCTAssertFalse(c.isBeingDismissed)
             XCTAssertFalse(c.isMovingFromParent)
             XCTAssertTrue(c.viewWindowIsNil)
         }
+        XCTAssertNil(events["Scenario5AViewController"], "A/B are not expected to receive viewDidDisappear during parent dismiss in current runtime.")
+        XCTAssertNil(events["Scenario5BViewController"], "A/B are not expected to receive viewDidDisappear during parent dismiss in current runtime.")
+    }
+
+    func testScenario5_SwipeDismissCancel_NoDisappear() {
+        tapScenarioButton(5)
+
+        let childC = app.otherElements["Scenario5CViewController-view"]
+        XCTAssertTrue(childC.waitForExistence(timeout: 2))
+
+        let before = disappearEventsCount(for: "Scenario5CViewController")
+        swipeDownCardForCancel(childC)
+        usleep(500_000)
+
+        XCTAssertEqual(disappearEventsCount(for: "Scenario5CViewController"), before)
+        XCTAssertTrue(childC.exists)
+        XCTAssertFalse(app.buttons["scenario-5-button"].exists)
+
+        let action = app.buttons["Scenario5CViewController-action"]
+        XCTAssertTrue(action.waitForExistence(timeout: 2))
+        action.tap()
+
+        waitForElementToDisappear(childC, timeout: 4)
+        waitScenarioButtonHittable(5, timeout: 4)
     }
 
     func testScenario6_PopToRoot() throws {
@@ -155,29 +164,16 @@ final class DismissProbeUITests: XCTestCase {
         waitScenarioButtonHittable(6, timeout: 4)
 
         let events = lastEventsByVC()
-        let a = events["Scenario6AViewController"]
-        let b = events["Scenario6BViewController"]
         let c = events["Scenario6CViewController"]
 
-        XCTAssertNotNil(a)
-        XCTAssertNotNil(b)
         XCTAssertNotNil(c)
-
-        if let a {
-            XCTAssertFalse(a.isBeingDismissed)
-            XCTAssertFalse(a.isMovingFromParent)
-            XCTAssertTrue(a.viewWindowIsNil)
-        }
-        if let b {
-            XCTAssertFalse(b.isBeingDismissed)
-            XCTAssertFalse(b.isMovingFromParent)
-            XCTAssertTrue(b.viewWindowIsNil)
-        }
         if let c {
             XCTAssertFalse(c.isBeingDismissed)
             XCTAssertTrue(c.isMovingFromParent)
             XCTAssertTrue(c.viewWindowIsNil)
         }
+        XCTAssertNil(events["Scenario6AViewController"], "A/B are not expected to receive viewDidDisappear during popToRoot in current runtime.")
+        XCTAssertNil(events["Scenario6BViewController"], "A/B are not expected to receive viewDidDisappear during popToRoot in current runtime.")
     }
 
     func testScenario7_PresentOverlay_NoDismissSignal() {
@@ -217,14 +213,13 @@ final class DismissProbeUITests: XCTestCase {
 
         app.navigationBars["Scenario8PullScreenDetailViewController"].buttons.element(boundBy: 0).tap()
         XCTAssertTrue(root.waitForExistence(timeout: 2))
-        waitScenarioButtonHittable(8)
         let detailEvent = try waitEvent(vcName: "Scenario8PullScreenDetailViewController")
 
         XCTAssertTrue(detailEvent.isMovingFromParent)
         XCTAssertTrue(detailEvent.viewWindowIsNil)
 
         app.buttons["scenario8-pullscreen-close"].tap()
-        waitScenarioButtonHittable(8, timeout: 4)
+        XCTAssertTrue(waitForElementToDisappear(root, timeout: 5))
 
         let rootEvent = try waitEvent(vcName: "Scenario8PullScreenViewController")
         XCTAssertTrue(rootEvent.viewWindowIsNil)
