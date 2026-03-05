@@ -13,7 +13,8 @@ private struct LifecycleEvent: Decodable {
 
 final class DismissProbeUITests: XCTestCase {
     private let app = XCUIApplication()
-    private let logPath = NSTemporaryDirectory().appending("dismiss-probe-events.jsonl")
+    private let logPath = NSTemporaryDirectory()
+        .appending("dismiss-probe-events-\(UUID().uuidString).jsonl")
     private let rootButtonTimeout: TimeInterval = 3
 
     override func setUp() {
