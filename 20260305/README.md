@@ -9,10 +9,11 @@ UIKit 기반 iOS 15.0+ 샘플 프로젝트입니다. SwiftUI/외부 라이브러
 - `ScenarioViewControllers.swift`
 - `LifecycleEventLogger.swift`
 - `DismissProbeUITests/DismissProbeUITests.swift`
+- `Packages/DismissProbeValidation` (로컬 Swift Package, 판정 규칙 분리)
 - `DismissProbe.xcodeproj` (xcodegen으로 생성)
 - `project.yml`
 
-## 생성된 테스트 시나리오 (7개)
+## 생성된 테스트 시나리오 (8개)
 - 시나리오 1: 코드로 modal dismiss
 - 시나리오 2: 스와이프 dismiss
 - 시나리오 3: 스와이프 취소
@@ -20,6 +21,7 @@ UIKit 기반 iOS 15.0+ 샘플 프로젝트입니다. SwiftUI/외부 라이브러
 - 시나리오 5: NavigationController 전체 dismiss
 - 시나리오 6: popToRoot
 - 시나리오 7: 위에 overlay present 오탐 방지
+- 시나리오 8: fullScreen pull dismiss
 
 각 시나리오의 ChildVC는 배경색을 구분하고 클래스명 라벨이 표시됩니다.
 
@@ -33,6 +35,25 @@ print("  view.window: \(view.window == nil ? "nil" : "exists")")
 print("  presentingVC: \(presentingViewController == nil ? "nil" : "exists")")
 print("  navigationController: \(navigationController == nil ? "nil" : "exists")")
 ```
+
+실제 제거 판별은 Swift Package의 `ActualDisappearEvaluator`가 처리합니다.
+
+```swift
+import DismissProbeValidation
+
+let check = ActualDisappearEvaluator.evaluate(self)
+// check.isActualDisappear -> 실제로 제거되었는지
+// check.reason -> 판단 사유 (isBeingDismissed/movingFromParent/detachedFromWindowAndNoActiveContainer 등)
+```
+
+판단 순서:
+1. 인터랙티브 전환이 취소된 경우 `isActualDisappear = false`
+2. `isBeingDismissed == true`면 `true`
+3. `isMovingFromParent == true`면 `true`
+4. `view.window == nil`이며 `isOwnedByActiveContainer == false`면 `true`
+5. 그 외는 `false`
+
+`isOwnedByActiveContainer`는 외부 주입 없이 `UIViewController`의 현재 소속 정보를 기준으로 내부 판단합니다.
 
 추가로 동일 로그를 `DISMISS_UI_TEST_LOG_PATH` 경로에 JSONL 형태로 저장해서 UITest에서 검증합니다.
 
@@ -56,7 +77,7 @@ print("  navigationController: \(navigationController == nil ? "nil" : "exists")
 ### 분석/공유 자료
 - 테스트 로그 기반으로 `view.window == nil` 사용 가이드와 시나리오별 판정 근거를 정리했습니다.
   - [VIEW_WINDOW_NIL_DISMISS_VALIDATION_REPORT.md](/Users/minsone/Developer/Experiment-Repo/20260305/VIEW_WINDOW_NIL_DISMISS_VALIDATION_REPORT.md)
-- 결과 템플릿에 시뮬레이터 런( iPhone 17 / iOS 26.2 ) 값을 반영해 두었습니다.
+- 결과 템플릿에 시뮬레이터 런( iPhone 15 / iOS 17.2 ) 값을 반영해 두었습니다.
   - [RESULT_MATRIX_TEMPLATE.md](/Users/minsone/Developer/Experiment-Repo/20260305/RESULT_MATRIX_TEMPLATE.md)
 
 ### 테스트 동작 포인트
@@ -84,10 +105,11 @@ print("  navigationController: \(navigationController == nil ? "nil" : "exists")
 | 6. popToRoot - B (중간) | `false` | `false` | `true` | `true` |
 | 6. popToRoot - C (최상단) | `false` | `true` | `true` | `true` |
 | 7. 위에 VC present (오탐) | (호출 없음) | - | `false` | `true` |
+| 8. fullScreen pull dismiss | `true` 또는 `false` | `false` 또는 `true`(detail) | `true`(close) / `false`(detail) | `true` |
 
 ## 실기기/시뮬레이터 기준 기대치
 
-- iOS 15.0+ 기준으로 `시나리오 1~7`의 플래그 조합은 실기기와 시뮬레이터에서 동일하게 관측되는 것을 전제로 작성했습니다.
+- iOS 15.0+ 기준으로 `시나리오 1~8`의 플래그 조합은 실기기와 시뮬레이터에서 동일하게 관측되는 것을 전제로 작성했습니다.
 - 차이가 생기면 `iOS 버전/디바이스 계열/인터랙션 타이밍`을 함께 기록해 다시 보정합니다.
 - 핵심 판정 기준:
   - 1, 2: dismiss 성공 시 `view.window == nil` + (모달 dismiss는 `isBeingDismissed == true`)
@@ -96,6 +118,7 @@ print("  navigationController: \(navigationController == nil ? "nil" : "exists")
   - 5: nav controller 단위 dismiss에서 하위 VC 3개 모두 `isBeingDismissed == false`, `isMovingFromParent == false`, `view.window == nil`
   - 6: popToRoot에서 중간 VC들은 `isMovingFromParent == false`, 최상단 C에서 `isMovingFromParent == true`, 모두 `view.window == nil`
   - 7: overlay가 있을 때는 `view.window != nil`이 유지되어 dismiss 오탐이 나면 안 됨
+  - 8: fullScreen 시나리오에서 detail pop은 `isMovingFromParent == true`, 최상단 close는 `isBeingDismissed == true` 또는 `detachedFromWindowAndNoActiveContainer`
 
 ## 테스트 통과 기준 집계 예시
 

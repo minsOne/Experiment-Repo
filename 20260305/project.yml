@@ -4,6 +4,10 @@ options:
   deploymentTarget:
     iOS: "15.0"
 
+packages:
+  DismissProbeValidation:
+    path: Packages/DismissProbeValidation
+
 configs:
   Debug: debug
   Release: release
@@ -16,6 +20,8 @@ targets:
       - path: .
         excludes:
           - DismissProbeUITests/**
+          - Packages/**
+          - SceneDelegate.swift
           - project.yml
           - DismissProbe.xcodeproj/**
           - README.md
@@ -33,6 +39,9 @@ targets:
     scheme:
       testTargets:
         - DismissProbeUITests
+    dependencies:
+      - package: DismissProbeValidation
+        product: DismissProbeValidation
 
   DismissProbeUITests:
     type: bundle.ui-testing

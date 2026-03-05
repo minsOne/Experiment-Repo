@@ -308,12 +308,14 @@ final class Scenario8PullScreenViewController: BaseScenarioViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        navigationItem.leftBarButtonItem = UIBarButtonItem(
+        let closeButton = UIBarButtonItem(
             image: UIImage(systemName: "xmark"),
             style: .plain,
             target: self,
             action: #selector(closeTapped)
         )
+        closeButton.accessibilityIdentifier = "scenario8-pullscreen-close"
+        navigationItem.leftBarButtonItem = closeButton
     }
 
     override func handlePrimaryAction() {
@@ -349,7 +351,7 @@ final class Scenario8PullScreenDetailViewController: BaseScenarioViewController 
         reportScenarioEvaluation(
             check,
             expectedActual: true,
-            acceptedReasons: [.detachedFromWindowAndNoActiveContainer],
+            acceptedReasons: [.movingFromParent, .detachedFromWindowAndNoActiveContainer],
             scenarioLabel: "S8-Detail"
         )
     }

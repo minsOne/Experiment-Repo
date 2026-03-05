@@ -75,7 +75,7 @@ class BaseScenarioViewController: DismissDisappearReportingViewController {
     /// 자식 ViewController가 viewDidDisappear에서 직접 호출해 사용.
     func evaluateActualDisappearAndNotify() -> ActualDisappearCheck {
         let disappearCheck = checkActualDisappear()
-        logDisappearEventIfNeeded(disappearCheck, event: makeDisappearEventName())
+        logDisappearEvent(disappearCheck, event: makeDisappearEventName())
         didEvaluateActualDisappear(disappearCheck)
         return disappearCheck
     }

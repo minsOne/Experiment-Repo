@@ -26,11 +26,23 @@ final class DismissProbeUITests: XCTestCase {
         }
 
         app.launchEnvironment["DISMISS_UI_TEST_LOG_PATH"] = logPath
+        print("🚀 launch log path: \(logPath)")
         app.launch()
-        XCTAssertTrue(app.buttons["scenario-1-button"].waitForExistence(timeout: rootButtonTimeout))
+        waitScenarioButtonHittable(1)
     }
 
     override func tearDown() {
+        if FileManager.default.fileExists(atPath: logPath) {
+            if let data = FileManager.default.contents(atPath: logPath),
+               let text = String(data: data, encoding: .utf8) {
+                print("📄 event log snapshot (\(text.split(whereSeparator: \.isNewline).count) lines):")
+                print(text)
+            } else {
+                print("⚠️ 이벤트 로그 파일을 읽을 수 없습니다: \(logPath)")
+            }
+        } else {
+            print("⚠️ 이벤트 로그 파일 없음: \(logPath)")
+        }
         app.terminate()
         super.tearDown()
     }
@@ -55,9 +67,10 @@ final class DismissProbeUITests: XCTestCase {
 
         let child = app.otherElements["Scenario2ChildViewController-view"]
         XCTAssertTrue(child.waitForExistence(timeout: 2))
-        child.swipeDown()
+        swipeDownCardForDismiss(child)
 
-        XCTAssertTrue(app.buttons["scenario-2-button"].waitForExistence(timeout: 3))
+        XCTAssertTrue(waitForElementToDisappear(child, timeout: 4))
+        waitScenarioButtonHittable(2)
         let event = try waitEvent(vcName: "Scenario2ChildViewController")
 
         XCTAssertTrue(event.isBeingDismissed)
@@ -72,15 +85,14 @@ final class DismissProbeUITests: XCTestCase {
         XCTAssertTrue(child.waitForExistence(timeout: 2))
 
         let before = disappearEventsCount(for: "Scenario3ChildViewController")
-        let start = child.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.28))
-        let end = child.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.40))
-        start.press(forDuration: 0.15, thenDragTo: end)
+        swipeDownCardForCancel(child)
 
         usleep(500_000)
         XCTAssertEqual(disappearEventsCount(for: "Scenario3ChildViewController"), before)
 
-        child.swipeDown()
-        XCTAssertTrue(app.buttons["scenario-3-button"].waitForExistence(timeout: 3))
+        swipeDownCardForDismiss(child)
+        XCTAssertTrue(waitForElementToDisappear(child, timeout: 4))
+        waitScenarioButtonHittable(3)
         XCTAssertGreaterThan(disappearEventsCount(for: "Scenario3ChildViewController"), before)
     }
 
@@ -90,7 +102,7 @@ final class DismissProbeUITests: XCTestCase {
         XCTAssertTrue(app.buttons["Scenario4ChildViewController-action"].waitForExistence(timeout: 2))
         app.buttons["Scenario4ChildViewController-action"].tap()
 
-        XCTAssertTrue(app.buttons["scenario-4-button"].waitForExistence(timeout: 2))
+        waitScenarioButtonHittable(4)
         let event = try waitEvent(vcName: "Scenario4ChildViewController")
 
         XCTAssertFalse(event.isBeingDismissed)
@@ -105,7 +117,7 @@ final class DismissProbeUITests: XCTestCase {
         XCTAssertTrue(action.waitForExistence(timeout: 2))
         action.tap()
 
-        XCTAssertTrue(app.buttons["scenario-5-button"].waitForExistence(timeout: 3))
+        waitScenarioButtonHittable(5, timeout: 4)
 
         let events = lastEventsByVC()
         let a = events["Scenario5AViewController"]
@@ -140,7 +152,7 @@ final class DismissProbeUITests: XCTestCase {
         XCTAssertTrue(action.waitForExistence(timeout: 2))
         action.tap()
 
-        XCTAssertTrue(app.buttons["scenario-6-button"].waitForExistence(timeout: 3))
+        waitScenarioButtonHittable(6, timeout: 4)
 
         let events = lastEventsByVC()
         let a = events["Scenario6AViewController"]
@@ -190,11 +202,66 @@ final class DismissProbeUITests: XCTestCase {
         } else {
             app.navigationBars["Scenario7ChildViewController"].buttons.element(boundBy: 0).tap()
         }
-        XCTAssertTrue(app.buttons["scenario-7-button"].waitForExistence(timeout: 2))
+        waitScenarioButtonHittable(7)
+    }
+
+    func testScenario8_FullScreenPullScreen() throws {
+        tapScenarioButton(8)
+
+        let root = app.otherElements["Scenario8PullScreenViewController-view"]
+        XCTAssertTrue(root.waitForExistence(timeout: 2))
+
+        app.buttons["Scenario8PullScreenViewController-action"].tap()
+        let detail = app.otherElements["Scenario8PullScreenDetailViewController-view"]
+        XCTAssertTrue(detail.waitForExistence(timeout: 2))
+
+        app.navigationBars["Scenario8PullScreenDetailViewController"].buttons.element(boundBy: 0).tap()
+        XCTAssertTrue(root.waitForExistence(timeout: 2))
+        waitScenarioButtonHittable(8)
+        let detailEvent = try waitEvent(vcName: "Scenario8PullScreenDetailViewController")
+
+        XCTAssertTrue(detailEvent.isMovingFromParent)
+        XCTAssertTrue(detailEvent.viewWindowIsNil)
+
+        app.buttons["scenario8-pullscreen-close"].tap()
+        waitScenarioButtonHittable(8, timeout: 4)
+
+        let rootEvent = try waitEvent(vcName: "Scenario8PullScreenViewController")
+        XCTAssertTrue(rootEvent.viewWindowIsNil)
     }
 
     private func tapScenarioButton(_ index: Int) {
         app.buttons["scenario-\(index)-button"].tap()
+    }
+
+    private func waitScenarioButtonHittable(_ index: Int, timeout: TimeInterval = 3) {
+        let button = app.buttons["scenario-\(index)-button"]
+        let predicate = NSPredicate(format: "exists == YES AND isHittable == YES")
+        let expectation = expectation(for: predicate, evaluatedWith: button, handler: nil)
+        wait(for: [expectation], timeout: timeout)
+    }
+
+    private func waitForElementToDisappear(_ element: XCUIElement, timeout: TimeInterval) -> Bool {
+        let deadline = Date().addingTimeInterval(timeout)
+        while Date() < deadline {
+            if !element.exists {
+                return true
+            }
+            usleep(100_000)
+        }
+        return false
+    }
+
+    private func swipeDownCardForDismiss(_ element: XCUIElement) {
+        let start = element.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.12))
+        let end = element.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.86))
+        start.press(forDuration: 0.15, thenDragTo: end)
+    }
+
+    private func swipeDownCardForCancel(_ element: XCUIElement) {
+        let start = element.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.34))
+        let end = element.coordinate(withNormalizedOffset: CGVector(dx: 0.5, dy: 0.44))
+        start.press(forDuration: 0.15, thenDragTo: end)
     }
 
     private func waitEvent(vcName: String, timeout: TimeInterval = 5) throws -> LifecycleEvent {

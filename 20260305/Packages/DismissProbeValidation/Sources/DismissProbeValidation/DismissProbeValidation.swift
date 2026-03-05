@@ -56,10 +56,7 @@ public enum ActualDisappearEvaluator {
     }
 
     private static func isOwnedByActiveContainer(_ viewController: UIViewController) -> Bool {
-        guard
-            !viewController.isBeingDismissed,
-            !viewController.isMovingFromParent
-        else { return false }
+        guard !viewController.isBeingDismissed && !viewController.isMovingFromParent else { return false }
 
         if let nav = viewController.navigationController,
            !nav.isBeingDismissed,
@@ -73,13 +70,6 @@ public enum ActualDisappearEvaluator {
            parent.view.window != nil,
            parent !== viewController,
            parent.children.contains(viewController)
-        {
-            return true
-        }
-
-        if let presenter = viewController.presentingViewController,
-           presenter.view.window != nil,
-           !presenter.isBeingDismissed
         {
             return true
         }

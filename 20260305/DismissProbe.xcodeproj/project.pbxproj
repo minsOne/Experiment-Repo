@@ -10,10 +10,10 @@
 		0F33AF13AE4410FB13DE2935 /* summarize_dismiss_probe_events.sh in Resources */ = {isa = PBXBuildFile; fileRef = DB8376F6992420D67491E2F8 /* summarize_dismiss_probe_events.sh */; };
 		1B007C5105363E1327DBA5AF /* DismissProbeUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 82CA77ADE19CAE087B585E50 /* DismissProbeUITests.swift */; };
 		210CD08DDFE63ED12400DF9A /* LifecycleEventLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 805B2AC064E89328F9CB2D01 /* LifecycleEventLogger.swift */; };
-		49A03BCD733BFA40BB86EBEA /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = A20365994BEBC38D78FF13AE /* SceneDelegate.swift */; };
 		5B5771C57943FB7793A0C4AC /* RESULT_MATRIX_TEMPLATE.md in Resources */ = {isa = PBXBuildFile; fileRef = B44BD43AD41C5BA1F0A67385 /* RESULT_MATRIX_TEMPLATE.md */; };
 		9238F94CCD23994B7C89AEDA /* ScenarioViewControllers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D93D189A4BA90FEFDEBC653 /* ScenarioViewControllers.swift */; };
 		9E7AEEC761EB284DF75EBBC6 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = BC5E1BD41CA91A2AB05C2C96 /* LaunchScreen.storyboard */; };
+		A460F5A713D4AC5678D2EB2A /* DismissProbeValidation in Frameworks */ = {isa = PBXBuildFile; productRef = 40F482125F1D8EBF34E58730 /* DismissProbeValidation */; };
 		A883330A79CFF7CCCFCDA9A0 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 35936F054E8389897D1789EB /* RootViewController.swift */; };
 		AB009B154CB2C722783B8842 /* run_matrix.sh in Resources */ = {isa = PBXBuildFile; fileRef = 0B53CF2A88C1EE8B2A476286 /* run_matrix.sh */; };
 		C8934DE2B0B9C2AE36075974 /* BaseScenarioViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B5BDCB8577564847D1BDD9C7 /* BaseScenarioViewController.swift */; };
@@ -42,15 +42,26 @@
 		6BFB6E95F1112187B8FA3EB0 /* VIEW_WINDOW_NIL_DISMISS_VALIDATION_REPORT.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = VIEW_WINDOW_NIL_DISMISS_VALIDATION_REPORT.md; sourceTree = "<group>"; };
 		805B2AC064E89328F9CB2D01 /* LifecycleEventLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LifecycleEventLogger.swift; sourceTree = "<group>"; };
 		82CA77ADE19CAE087B585E50 /* DismissProbeUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissProbeUITests.swift; sourceTree = "<group>"; };
+		8C367E9C223FA7389B19310C /* DismissProbeValidation */ = {isa = PBXFileReference; lastKnownFileType = folder; name = DismissProbeValidation; path = Packages/DismissProbeValidation; sourceTree = SOURCE_ROOT; };
 		9B8BBA4DFF9F348987EE38CE /* DismissDisappearReportingViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DismissDisappearReportingViewController.swift; sourceTree = "<group>"; };
 		9EB7F68A98CDFAE7BFCC3082 /* DismissProbe.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = DismissProbe.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		A139928C5092960A943AB035 /* DismissProbeUITests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = DismissProbeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		A20365994BEBC38D78FF13AE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		B44BD43AD41C5BA1F0A67385 /* RESULT_MATRIX_TEMPLATE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = RESULT_MATRIX_TEMPLATE.md; sourceTree = "<group>"; };
 		B5BDCB8577564847D1BDD9C7 /* BaseScenarioViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseScenarioViewController.swift; sourceTree = "<group>"; };
 		BC5E1BD41CA91A2AB05C2C96 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		DB8376F6992420D67491E2F8 /* summarize_dismiss_probe_events.sh */ = {isa = PBXFileReference; lastKnownFileType = text.script.sh; path = summarize_dismiss_probe_events.sh; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		07F798E6B3DEBF287C4C05FD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A460F5A713D4AC5678D2EB2A /* DismissProbeValidation in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		43BC2B330C7DFA9386E63528 /* Products */ = {
@@ -67,6 +78,7 @@
 			children = (
 				8D16352F1921B4253FF28ED1 /* 20260305 */,
 				9B777B0EDFD39C9B537CB3F7 /* DismissProbeUITests */,
+				B4139DB31E8506285E598BB1 /* Packages */,
 				D0D6757196D4A085E5C243B1 /* Scripts */,
 				43BC2B330C7DFA9386E63528 /* Products */,
 			);
@@ -83,7 +95,6 @@
 				B44BD43AD41C5BA1F0A67385 /* RESULT_MATRIX_TEMPLATE.md */,
 				35936F054E8389897D1789EB /* RootViewController.swift */,
 				4D93D189A4BA90FEFDEBC653 /* ScenarioViewControllers.swift */,
-				A20365994BEBC38D78FF13AE /* SceneDelegate.swift */,
 				6BFB6E95F1112187B8FA3EB0 /* VIEW_WINDOW_NIL_DISMISS_VALIDATION_REPORT.md */,
 				D0D6757196D4A085E5C243B1 /* Scripts */,
 			);
@@ -97,6 +108,14 @@
 				82CA77ADE19CAE087B585E50 /* DismissProbeUITests.swift */,
 			);
 			path = DismissProbeUITests;
+			sourceTree = "<group>";
+		};
+		B4139DB31E8506285E598BB1 /* Packages */ = {
+			isa = PBXGroup;
+			children = (
+				8C367E9C223FA7389B19310C /* DismissProbeValidation */,
+			);
+			path = Packages;
 			sourceTree = "<group>";
 		};
 		D0D6757196D4A085E5C243B1 /* Scripts */ = {
@@ -136,6 +155,7 @@
 			buildPhases = (
 				A39662E10ABA945B4EE82245 /* Sources */,
 				7197F5E869438DAF8224D3BB /* Resources */,
+				07F798E6B3DEBF287C4C05FD /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -143,6 +163,7 @@
 			);
 			name = DismissProbe;
 			packageProductDependencies = (
+				40F482125F1D8EBF34E58730 /* DismissProbeValidation */,
 			);
 			productName = DismissProbe;
 			productReference = 9EB7F68A98CDFAE7BFCC3082 /* DismissProbe.app */;
@@ -172,6 +193,9 @@
 			);
 			mainGroup = 4C7B3EDC6AF69731944E7BFF;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				645073EBEDD94CF50283A4C4 /* XCLocalSwiftPackageReference "Packages/DismissProbeValidation" */,
+			);
 			preferredProjectObjectVersion = 77;
 			projectDirPath = "";
 			projectRoot = "";
@@ -209,7 +233,6 @@
 				210CD08DDFE63ED12400DF9A /* LifecycleEventLogger.swift in Sources */,
 				A883330A79CFF7CCCFCDA9A0 /* RootViewController.swift in Sources */,
 				9238F94CCD23994B7C89AEDA /* ScenarioViewControllers.swift in Sources */,
-				49A03BCD733BFA40BB86EBEA /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -458,6 +481,20 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCLocalSwiftPackageReference section */
+		645073EBEDD94CF50283A4C4 /* XCLocalSwiftPackageReference "Packages/DismissProbeValidation" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = Packages/DismissProbeValidation;
+		};
+/* End XCLocalSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		40F482125F1D8EBF34E58730 /* DismissProbeValidation */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = DismissProbeValidation;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 5DDE87A093241D85035D3619 /* Project object */;
 }
