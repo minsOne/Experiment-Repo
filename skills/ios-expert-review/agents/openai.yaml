@@ -1,0 +1,4 @@
+interface:
+  display_name: "iOS Expert Review"
+  short_description: "Six-lens iOS review and plan"
+  default_prompt: "Use $ios-expert-review to review this iOS topic and produce a six-perspective plan: {{input}}"
